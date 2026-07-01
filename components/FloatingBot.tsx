@@ -2,8 +2,48 @@
 import { useState, useEffect } from "react";
 import { Sparkles, X } from "lucide-react";
 import { THEME, GRAD } from "@/config/theme.config";
+import { useTypewriterCycle } from "@/lib/useTypewriter";
 import { Orb } from "./Orb";
 import ChatPanel from "./ChatPanel";
+
+const TEASER_LINES = [
+  "Want to know about this person? Tap me.",
+  "Ask me where Fahim works.",
+  "Curious about his tech stack?",
+  "Want a breakdown of a project?",
+  "What's he building at Octopi?",
+  "Tap me — I'll answer.",
+];
+
+function Teaser({ onOpen }: { onOpen: () => void }) {
+  const text = useTypewriterCycle(TEASER_LINES, { typeSpeed: 42, deleteSpeed: 18, hold: 1500 });
+  return (
+    <div
+      onClick={onOpen}
+      style={{
+        position: "fixed",
+        bottom: 92,
+        right: 24,
+        zIndex: 60,
+        cursor: "pointer",
+        width: 230,
+        minHeight: 44,
+        padding: "12px 16px",
+        borderRadius: 16,
+        background: THEME.glass,
+        backdropFilter: "blur(14px)",
+        border: `1px solid ${THEME.cyan}44`,
+        color: THEME.text,
+        fontSize: 13.5,
+        lineHeight: 1.5,
+        boxShadow: `0 0 30px ${THEME.cyan}22`,
+        animation: "floatIn .4s ease",
+      }}
+    >
+      <span className="type-caret">{text}</span>
+    </div>
+  );
+}
 
 export default function FloatingBot() {
   const [open, setOpen] = useState(false);
@@ -17,32 +57,12 @@ export default function FloatingBot() {
   return (
     <>
       {teaser && !open && (
-        <div
-          onClick={() => {
+        <Teaser
+          onOpen={() => {
             setOpen(true);
             setTeaser(false);
           }}
-          style={{
-            position: "fixed",
-            bottom: 92,
-            right: 24,
-            zIndex: 60,
-            cursor: "pointer",
-            maxWidth: 230,
-            padding: "12px 16px",
-            borderRadius: 16,
-            background: THEME.glass,
-            backdropFilter: "blur(14px)",
-            border: `1px solid ${THEME.cyan}44`,
-            color: THEME.text,
-            fontSize: 13.5,
-            lineHeight: 1.5,
-            boxShadow: `0 0 30px ${THEME.cyan}22`,
-            animation: "floatIn .4s ease",
-          }}
-        >
-          Want to know about this person? Tap me — I&apos;ll answer.
-        </div>
+        />
       )}
 
       <button

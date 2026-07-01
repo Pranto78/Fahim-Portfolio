@@ -19,7 +19,7 @@ const items = [
 
 export default function Education() {
   return (
-    <Section id="education">
+    <Section id="education" variant="flip">
       <Eyebrow>Background</Eyebrow>
       <Heading>Education &amp; Learning</Heading>
       <div style={{ position: "relative", paddingLeft: 28 }}>

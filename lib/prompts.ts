@@ -1,6 +1,6 @@
 import { PERSON, PERSONAL } from "@/data/person";
 import { PROJECTS } from "@/data/projects";
-import { SKILLS_ROW_1, SKILLS_ROW_2 } from "@/data/skills";
+import { SKILLS } from "@/data/skills";
 
 // ---- GENERAL assistant: knows about Fahim ----
 export function generalPrompt(): string {
@@ -20,7 +20,7 @@ Location: ${PERSON.location}.
 Education: ${PERSON.education}
 Certification: ${PERSON.cert}
 Languages: ${PERSON.languages}
-Skills: ${[...SKILLS_ROW_1, ...SKILLS_ROW_2].join(", ")}.
+Skills: ${SKILLS.map((s) => s.name).join(", ")}.
 Contact: ${PERSON.email} / ${PERSON.phone} / LinkedIn ${PERSON.linkedin} / GitHub ${PERSON.github}.
 Company website: ${PERSON.companyUrl}
 Office projects: ${PROJECTS.map((p) => `${p.name} — ${p.blurb} ${p.role}`).join(" | ")}

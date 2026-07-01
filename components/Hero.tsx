@@ -4,6 +4,7 @@ import { THEME, GRAD } from "@/config/theme.config";
 import { PERSON } from "@/data/person";
 import { Section } from "./ui";
 import { Orb } from "./Orb";
+import TiltCard from "./TiltCard";
 
 export default function Hero() {
   return (
@@ -100,24 +101,28 @@ export default function Hero() {
 
         <div style={{ flex: "0 0 auto", display: "grid", placeItems: "center", position: "relative" }}>
           {/* Replace this block with your photo later */}
-          <div
-            style={{
-              width: 260,
-              height: 260,
-              borderRadius: "50%",
-              display: "grid",
-              placeItems: "center",
-              border: `1px solid ${THEME.border}`,
-              background: THEME.bgSoft,
-              position: "relative",
-              overflow: "hidden",
-            }}
-          >
-            <Orb size={150} />
-            <div style={{ position: "absolute", bottom: 18, fontFamily: THEME.fontMono, fontSize: 11, color: THEME.muted }}>
-              your photo here
+          <TiltCard max={16} scale={1.04} style={{ borderRadius: "50%" }}>
+            <div
+              style={{
+                width: 260,
+                height: 260,
+                borderRadius: "50%",
+                display: "grid",
+                placeItems: "center",
+                border: `1px solid ${THEME.border}`,
+                background: THEME.bgSoft,
+                position: "relative",
+                overflow: "hidden",
+              }}
+            >
+              <div style={{ transform: "translateZ(40px)" }}>
+                <Orb size={150} />
+              </div>
+              <div style={{ position: "absolute", bottom: 18, fontFamily: THEME.fontMono, fontSize: 11, color: THEME.muted }}>
+                your photo here
+              </div>
             </div>
-          </div>
+          </TiltCard>
         </div>
       </div>
     </Section>

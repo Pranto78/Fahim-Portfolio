@@ -6,30 +6,33 @@ import { PROJECTS, Project } from "@/data/projects";
 import { Section, Eyebrow, Heading } from "./ui";
 import { Orb } from "./Orb";
 import ChatPanel from "./ChatPanel";
+import TiltCard from "./TiltCard";
 
 function ProjectCard({ p }: { p: Project }) {
   const [hover, setHover] = useState(false);
   return (
-    <div
-      onMouseEnter={() => setHover(true)}
-      onMouseLeave={() => setHover(false)}
-      style={{
-        padding: 22,
-        borderRadius: 16,
-        background: THEME.bgSoft,
-        border: `1px solid ${hover ? THEME.violet + "88" : THEME.border}`,
-        boxShadow: hover ? `0 0 30px ${THEME.violet}22` : "none",
-        transform: hover ? "translateY(-4px)" : "none",
-        transition: "all .25s",
-      }}
-    >
-      <div style={{ fontSize: 12, color: THEME.cyan, fontFamily: THEME.fontMono, marginBottom: 8 }}>{p.tag}</div>
-      <div style={{ fontFamily: THEME.fontDisplay, fontWeight: 700, color: THEME.heading, fontSize: 18 }}>{p.name}</div>
-      <p style={{ fontSize: 13.5, color: THEME.muted, marginTop: 10, lineHeight: 1.6 }}>{p.blurb}</p>
-      <div style={{ marginTop: 14, fontSize: 12.5, color: THEME.text, display: "flex", alignItems: "center", gap: 6 }}>
-        <ArrowUpRight size={15} style={{ color: THEME.violet }} /> {p.role.split(".")[0]}.
+    <TiltCard max={9} scale={1.03} style={{ borderRadius: 16 }}>
+      <div
+        onMouseEnter={() => setHover(true)}
+        onMouseLeave={() => setHover(false)}
+        style={{
+          padding: 22,
+          borderRadius: 16,
+          height: "100%",
+          background: THEME.bgSoft,
+          border: `1px solid ${hover ? THEME.violet + "88" : THEME.border}`,
+          boxShadow: hover ? `0 0 30px ${THEME.violet}22` : "none",
+          transition: "border-color .25s, box-shadow .25s",
+        }}
+      >
+        <div style={{ fontSize: 12, color: THEME.cyan, fontFamily: THEME.fontMono, marginBottom: 8, transform: "translateZ(20px)" }}>{p.tag}</div>
+        <div style={{ fontFamily: THEME.fontDisplay, fontWeight: 700, color: THEME.heading, fontSize: 18, transform: "translateZ(28px)" }}>{p.name}</div>
+        <p style={{ fontSize: 13.5, color: THEME.muted, marginTop: 10, lineHeight: 1.6 }}>{p.blurb}</p>
+        <div style={{ marginTop: 14, fontSize: 12.5, color: THEME.text, display: "flex", alignItems: "center", gap: 6 }}>
+          <ArrowUpRight size={15} style={{ color: THEME.violet }} /> {p.role.split(".")[0]}.
+        </div>
       </div>
-    </div>
+    </TiltCard>
   );
 }
 
@@ -47,7 +50,7 @@ export default function Projects() {
   };
 
   return (
-    <Section id="projects">
+    <Section id="projects" variant="right">
       <Eyebrow>Work</Eyebrow>
       <Heading>Projects I build at Octopi</Heading>
 

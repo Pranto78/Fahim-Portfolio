@@ -11,6 +11,7 @@ import Projects from "@/components/Projects";
 import Education from "@/components/Education";
 import Footer from "@/components/Footer";
 import FloatingBot from "@/components/FloatingBot";
+import Background from "@/components/Background";
 
 export default function Page() {
   const [loading, setLoading] = useState(true);
@@ -40,39 +41,12 @@ export default function Page() {
         overflowX: "hidden",
       }}
     >
-      {/* ambient gradient blobs */}
-      <div
-        style={{
-          position: "fixed",
-          top: "-10%",
-          left: "-5%",
-          width: 500,
-          height: 500,
-          borderRadius: "50%",
-          background: THEME.cyan,
-          opacity: 0.06,
-          filter: "blur(120px)",
-          pointerEvents: "none",
-        }}
-      />
-      <div
-        style={{
-          position: "fixed",
-          bottom: "-10%",
-          right: "-5%",
-          width: 500,
-          height: 500,
-          borderRadius: "50%",
-          background: THEME.violet,
-          opacity: 0.07,
-          filter: "blur(120px)",
-          pointerEvents: "none",
-        }}
-      />
+      {/* animated canvas background */}
+      <Background />
 
       {loading && <Loader onDone={() => setLoading(false)} />}
       {!loading && (
-        <>
+        <div style={{ position: "relative", zIndex: 1 }}>
           <Navbar active={active} />
           <Hero />
           <About />
@@ -81,7 +55,7 @@ export default function Page() {
           <Education />
           <Footer />
           <FloatingBot />
-        </>
+        </div>
       )}
     </div>
   );
