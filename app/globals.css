@@ -123,6 +123,27 @@ a {
   }
 }
 
+@keyframes thruster {
+  0%,
+  100% {
+    opacity: 0.55;
+    transform: scaleX(1) scaleY(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scaleX(1.15) scaleY(0.9);
+  }
+}
+@keyframes shipBob {
+  0%,
+  100% {
+    transform: translateY(-2px);
+  }
+  50% {
+    transform: translateY(2px);
+  }
+}
+
 .type-caret::after {
   content: "▍";
   margin-left: 1px;
