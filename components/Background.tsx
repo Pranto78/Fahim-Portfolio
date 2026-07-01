@@ -76,7 +76,7 @@ export default function Background() {
       cv.style.height = h + "px";
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-      const count = Math.min(520, Math.floor((w * h) / 5000));
+      const count = Math.min(4200, Math.floor((w * h) / 600));
       particles = Array.from({ length: count }, make);
     }
 
