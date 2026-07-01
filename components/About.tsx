@@ -1,11 +1,11 @@
 "use client";
-import { ReactNode } from "react";
+import { ReactNode, useState } from "react";
 import { motion, Variants } from "framer-motion";
 import { Github, ExternalLink, MapPin, Briefcase, GraduationCap } from "lucide-react";
 import { THEME } from "@/config/theme.config";
 import { PERSON, PERSONAL } from "@/data/person";
 import { Section, Eyebrow, Heading } from "./ui";
-import TiltCard from "./TiltCard";
+import SnakeBorder from "./SnakeBorder";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
@@ -31,6 +31,48 @@ function Row({ icon, label }: { icon: ReactNode; label: string }) {
       <span style={{ color: THEME.cyan }}>{icon}</span>
       {label}
     </div>
+  );
+}
+
+function PersonalCard({ p }: { p: (typeof PERSONAL)[number] }) {
+  const [hover, setHover] = useState(false);
+  return (
+    <motion.div variants={cardFloat}>
+      <div
+        onMouseEnter={() => setHover(true)}
+        onMouseLeave={() => setHover(false)}
+        style={{
+          position: "relative",
+          padding: 16,
+          borderRadius: 14,
+          background: THEME.bgSoft,
+          border: `1px solid ${THEME.border}`,
+          boxShadow: hover ? `0 0 30px ${THEME.violet}22` : "none",
+          transform: hover ? "translateY(-4px)" : "translateY(0)",
+          transition: "transform .45s cubic-bezier(0.16,1,0.3,1), box-shadow .45s ease",
+        }}
+      >
+        <SnakeBorder active={hover} radius={14} duration={1.5} />
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 10 }}>
+          <div style={{ fontFamily: THEME.fontDisplay, fontWeight: 600, color: THEME.heading, fontSize: 15 }}>
+            {p.name}
+          </div>
+          <div style={{ display: "flex", gap: 8 }}>
+            {p.github && (
+              <a href={p.github} target="_blank" rel="noreferrer" style={{ color: THEME.muted }}>
+                <Github size={17} />
+              </a>
+            )}
+            {p.live && (
+              <a href={p.live} target="_blank" rel="noreferrer" style={{ color: THEME.cyan }}>
+                <ExternalLink size={17} />
+              </a>
+            )}
+          </div>
+        </div>
+        <p style={{ fontSize: 13.5, color: THEME.muted, marginTop: 6, lineHeight: 1.55 }}>{p.desc}</p>
+      </div>
+    </motion.div>
   );
 }
 
@@ -102,37 +144,7 @@ export default function About() {
             style={{ display: "flex", flexDirection: "column", gap: 12 }}
           >
             {PERSONAL.map((p) => (
-              <motion.div key={p.name} variants={cardFloat}>
-                <TiltCard max={8} scale={1.03} style={{ borderRadius: 14 }}>
-                  <div
-                    style={{
-                      padding: 16,
-                      borderRadius: 14,
-                      background: THEME.bgSoft,
-                      border: `1px solid ${THEME.border}`,
-                    }}
-                  >
-                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 10 }}>
-                      <div style={{ fontFamily: THEME.fontDisplay, fontWeight: 600, color: THEME.heading, fontSize: 15 }}>
-                        {p.name}
-                      </div>
-                      <div style={{ display: "flex", gap: 8 }}>
-                        {p.github && (
-                          <a href={p.github} target="_blank" rel="noreferrer" style={{ color: THEME.muted }}>
-                            <Github size={17} />
-                          </a>
-                        )}
-                        {p.live && (
-                          <a href={p.live} target="_blank" rel="noreferrer" style={{ color: THEME.cyan }}>
-                            <ExternalLink size={17} />
-                          </a>
-                        )}
-                      </div>
-                    </div>
-                    <p style={{ fontSize: 13.5, color: THEME.muted, marginTop: 6, lineHeight: 1.55 }}>{p.desc}</p>
-                  </div>
-                </TiltCard>
-              </motion.div>
+              <PersonalCard key={p.name} p={p} />
             ))}
           </motion.div>
         </motion.div>
