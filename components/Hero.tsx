@@ -2,6 +2,7 @@
 import { Github } from "lucide-react";
 import { THEME, GRAD } from "@/config/theme.config";
 import { PERSON } from "@/data/person";
+import { scrollToSection } from "@/lib/scrollToSection";
 import { Section } from "./ui";
 import { Orb } from "./Orb";
 import TiltCard from "./TiltCard";
@@ -60,7 +61,7 @@ export default function Hero() {
           </p>
           <div style={{ display: "flex", gap: 12, marginTop: 30, flexWrap: "wrap" }}>
             <button
-              onClick={() => document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" })}
+              onClick={() => scrollToSection("projects")}
               style={{
                 padding: "13px 24px",
                 borderRadius: 12,

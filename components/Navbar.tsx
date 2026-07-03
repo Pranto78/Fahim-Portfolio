@@ -4,6 +4,7 @@ import { createPortal } from "react-dom";
 import { motion, AnimatePresence, useMotionValue, useSpring, useReducedMotion } from "framer-motion";
 import { THEME, GRAD } from "@/config/theme.config";
 import { NAV } from "@/data/skills";
+import { scrollToSection } from "@/lib/scrollToSection";
 import Spaceship from "./Spaceship";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
@@ -76,7 +77,7 @@ export default function Navbar({ active }: { active: string }) {
   }, [ship]);
 
   const go = (id: string) => {
-    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+    scrollToSection(id);
     setOpen(false);
   };
 

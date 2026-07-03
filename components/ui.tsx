@@ -58,7 +58,7 @@ export function Section({
         whileInView="show"
         viewport={{ once: false, amount: 0.2 }}
         style={{
-          padding: "110px 5vw",
+          padding: "80px 5vw",
           maxWidth: 1200,
           margin: "0 auto",
           transformStyle: "preserve-3d",
