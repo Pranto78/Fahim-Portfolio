@@ -2,6 +2,18 @@
 // OFFICE PROJECTS — featured in the AI-driven Projects section.
 // Each block is the knowledge source for that project's chat.
 // =========================================================================
+export type ProjectTech =
+  | "react"
+  | "react-native"
+  | "typescript"
+  | "vite"
+  | "expo"
+  | "node"
+  | "express"
+  | "redux"
+  | "mongodb"
+  | "firebase";
+
 export type Project = {
   id: string;
   name: string;
@@ -9,6 +21,7 @@ export type Project = {
   blurb: string;
   unique: string;
   stack: string;
+  visualStack: ProjectTech[];
   state: string;
   auth: string;
   db: string;
@@ -26,6 +39,7 @@ export const PROJECTS: Project[] = [
       "Spans three repos — a React 19 web admin, an Express 5 API, and a bare React Native field app — all sharing one CRM backend.",
     stack:
       "React 19 + Vite + TypeScript (web), Express 5 + TypeScript (API), React Native 0.83 bare CLI (mobile).",
+    visualStack: ["react", "react-native", "typescript", "vite", "express", "mongodb"],
     state: "Redux Toolkit + RTK Query everywhere; redux-persist on mobile.",
     auth:
       "JWT (access 1d / refresh 30d) with Passport (local + Google OAuth20) on web; react-native-keychain for secure token storage on mobile with silent logout on token expiry.",
@@ -45,6 +59,7 @@ export const PROJECTS: Project[] = [
       "One Expo codebase builds NuPath, NFL and Healthful, switched by APP_BRAND + APP_ENV flags via EAS profiles.",
     stack:
       "Expo SDK 54 + expo-router 6, React Native 0.81, React 19, TypeScript. Node + Express 4 + TypeScript backend.",
+    visualStack: ["expo", "react-native", "typescript", "node", "redux", "mongodb"],
     state: "Redux Toolkit + RTK Query with 26 injected API slices.",
     auth:
       "Firebase Authentication (ID token → Bearer), plus Google & Apple Sign-In. Tenancy/roles via AuthContext. Backend verifies Firebase ID tokens with Firebase Admin.",
@@ -62,6 +77,7 @@ export const PROJECTS: Project[] = [
     unique:
       "Hand-written API layer — ~29 endpoint modules with a custom resolveAuthToken resolver instead of a generated client.",
     stack: "React Native 0.80.1 bare CLI, React 19, TypeScript.",
+    visualStack: ["react-native", "typescript", "redux", "firebase"],
     state:
       "Redux Toolkit + redux-persist with 17 slices (auth, otp, coupon, plans, physician, pharmacy, aiAssistant, payments, glp…), plus a visitor RTK Query API.",
     auth:
@@ -81,6 +97,7 @@ export const PROJECTS: Project[] = [
       "Security-first: WebAuthn passkeys + device fingerprinting + QR-based 2FA on top of classic JWT.",
     stack:
       "React 18 + Vite frontend (JavaScript), Node + Express 4 backend running as a Windows service over HTTPS.",
+    visualStack: ["react", "vite", "node", "express", "redux", "mongodb"],
     state:
       "Redux Toolkit + RTK Query, heavily sliced (training, lab, rxMedication, pricing, visitor, AI, partners…).",
     auth:

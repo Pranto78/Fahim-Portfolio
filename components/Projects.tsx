@@ -1,21 +1,115 @@
 "use client";
 import { useState } from "react";
 import { Sparkles, Hand, ArrowUpRight, Briefcase } from "lucide-react";
+import type { IconType } from "react-icons";
+import {
+  SiExpo,
+  SiExpress,
+  SiFirebase,
+  SiMongodb,
+  SiNodedotjs,
+  SiReact,
+  SiRedux,
+  SiTypescript,
+  SiVite,
+} from "react-icons/si";
 import { THEME, GRAD } from "@/config/theme.config";
-import { PROJECTS, Project } from "@/data/projects";
+import { PROJECTS, Project, ProjectTech } from "@/data/projects";
 import { Section, Eyebrow, Heading } from "./ui";
 import { Orb } from "./Orb";
 import ChatPanel from "./ChatPanel";
 import SnakeBorder from "./SnakeBorder";
 
+type TechVisual = {
+  label: string;
+  icon: IconType;
+  color: string;
+};
+
+const TECH_VISUALS: Record<ProjectTech, TechVisual> = {
+  react: { label: "React", icon: SiReact, color: "#61DAFB" },
+  "react-native": { label: "React Native", icon: SiReact, color: "#61DAFB" },
+  typescript: { label: "TypeScript", icon: SiTypescript, color: "#3178C6" },
+  vite: { label: "Vite", icon: SiVite, color: "#A855F7" },
+  expo: { label: "Expo", icon: SiExpo, color: "#F2F2F2" },
+  node: { label: "Node.js", icon: SiNodedotjs, color: "#5FA04E" },
+  express: { label: "Express", icon: SiExpress, color: "#F2F2F2" },
+  redux: { label: "Redux Toolkit", icon: SiRedux, color: "#764ABC" },
+  mongodb: { label: "MongoDB", icon: SiMongodb, color: "#47A248" },
+  firebase: { label: "Firebase", icon: SiFirebase, color: "#FFCA28" },
+};
+
+function ProjectStackLogos({
+  stack,
+  active,
+  compact = false,
+}: {
+  stack: ProjectTech[];
+  active: boolean;
+  compact?: boolean;
+}) {
+  const size = compact ? 29 : 34;
+  const iconSize = compact ? 15 : 18;
+
+  return (
+    <div
+      aria-label="Technology stack"
+      style={{
+        display: "flex",
+        alignItems: "center",
+        flexWrap: "wrap",
+        gap: compact ? 7 : 8,
+        marginTop: compact ? 11 : "auto",
+        paddingTop: compact ? 0 : 16,
+      }}
+    >
+      {stack.map((tech, index) => {
+        const visual = TECH_VISUALS[tech];
+        const Icon = visual.icon;
+
+        return (
+          <span
+            key={tech}
+            title={visual.label}
+            aria-label={visual.label}
+            style={{
+              width: size,
+              height: size,
+              display: "grid",
+              placeItems: "center",
+              flex: "0 0 auto",
+              borderRadius: 9,
+              color: active ? visual.color : THEME.muted,
+              background: active ? `${visual.color}0D` : "transparent",
+              border: `1px solid ${active ? `${visual.color}55` : THEME.border}`,
+              boxShadow: active ? `0 0 16px ${visual.color}38, inset 0 0 10px ${visual.color}12` : "none",
+              transform: active ? "translateY(-2px) scale(1.04)" : "translateY(0) scale(1)",
+              transition:
+                "color .3s ease, background-color .3s ease, border-color .3s ease, box-shadow .3s ease, transform .3s cubic-bezier(0.16,1,0.3,1)",
+              transitionDelay: active ? `${index * 45}ms` : "0ms",
+            }}
+          >
+            <Icon size={iconSize} aria-hidden />
+          </span>
+        );
+      })}
+    </div>
+  );
+}
+
 function ProjectCard({ p }: { p: Project }) {
   const [hover, setHover] = useState(false);
   return (
     <div
+      tabIndex={0}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
+      onFocus={() => setHover(true)}
+      onBlur={() => setHover(false)}
       style={{
         position: "relative",
+        display: "flex",
+        flexDirection: "column",
         padding: 22,
         borderRadius: 16,
         height: "100%",
@@ -24,6 +118,7 @@ function ProjectCard({ p }: { p: Project }) {
         boxShadow: hover ? `0 0 34px ${THEME.violet}22` : "none",
         transform: hover ? "translateY(-5px)" : "translateY(0)",
         transition: "transform .45s cubic-bezier(0.16,1,0.3,1), box-shadow .45s ease",
+        outline: "none",
       }}
     >
       <SnakeBorder active={hover} radius={16} duration={1.5} />
@@ -33,6 +128,52 @@ function ProjectCard({ p }: { p: Project }) {
       <div style={{ marginTop: 14, fontSize: 12.5, color: THEME.text, display: "flex", alignItems: "center", gap: 6 }}>
         <ArrowUpRight size={15} style={{ color: THEME.violet }} /> {p.role.split(".")[0]}.
       </div>
+      <ProjectStackLogos stack={p.visualStack} active={hover} />
+    </div>
+  );
+}
+
+function DraggableProjectCard({ p, selected, onSelect }: { p: Project; selected: boolean; onSelect: () => void }) {
+  const [hover, setHover] = useState(false);
+  const active = hover || selected;
+
+  return (
+    <div
+      draggable
+      role="button"
+      tabIndex={0}
+      aria-pressed={selected}
+      onDragStart={(e) => e.dataTransfer.setData("pid", p.id)}
+      onClick={onSelect}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          onSelect();
+        }
+      }}
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
+      onFocus={() => setHover(true)}
+      onBlur={() => setHover(false)}
+      style={{
+        padding: 16,
+        borderRadius: 14,
+        cursor: "grab",
+        background: THEME.bgSoft,
+        border: `1px solid ${active ? THEME.cyan + "88" : THEME.border}`,
+        boxShadow: active ? `0 0 24px ${THEME.cyan}22` : "none",
+        transform: hover ? "translateY(-2px)" : "translateY(0)",
+        transition: "border-color .25s ease, box-shadow .25s ease, transform .25s ease",
+        outline: "none",
+      }}
+    >
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <div style={{ fontFamily: THEME.fontDisplay, fontWeight: 600, color: THEME.heading, fontSize: 15 }}>{p.name}</div>
+        <Hand size={15} style={{ color: active ? THEME.cyan : THEME.muted, transition: "color .25s ease" }} />
+      </div>
+      <div style={{ fontSize: 12, color: THEME.cyan, fontFamily: THEME.fontMono, marginTop: 4 }}>{p.tag}</div>
+      <p style={{ fontSize: 13, color: THEME.muted, marginTop: 8, lineHeight: 1.5 }}>{p.blurb}</p>
+      <ProjectStackLogos stack={p.visualStack} active={active} compact />
     </div>
   );
 }
@@ -166,30 +307,12 @@ export default function Projects() {
             {/* RIGHT — draggable cards */}
             <div style={{ flex: "1 1 320px", display: "flex", flexDirection: "column", gap: 12 }}>
               {PROJECTS.map((p) => (
-                <div
+                <DraggableProjectCard
                   key={p.id}
-                  draggable
-                  onDragStart={(e) => e.dataTransfer.setData("pid", p.id)}
-                  onClick={() => setSelected(p)}
-                  style={{
-                    padding: 16,
-                    borderRadius: 14,
-                    cursor: "grab",
-                    background: THEME.bgSoft,
-                    border: `1px solid ${selected?.id === p.id ? THEME.cyan + "88" : THEME.border}`,
-                    boxShadow: selected?.id === p.id ? `0 0 24px ${THEME.cyan}22` : "none",
-                    transition: "all .2s",
-                  }}
-                >
-                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                    <div style={{ fontFamily: THEME.fontDisplay, fontWeight: 600, color: THEME.heading, fontSize: 15 }}>
-                      {p.name}
-                    </div>
-                    <Hand size={15} style={{ color: THEME.muted }} />
-                  </div>
-                  <div style={{ fontSize: 12, color: THEME.cyan, fontFamily: THEME.fontMono, marginTop: 4 }}>{p.tag}</div>
-                  <p style={{ fontSize: 13, color: THEME.muted, marginTop: 8, lineHeight: 1.5 }}>{p.blurb}</p>
-                </div>
+                  p={p}
+                  selected={selected?.id === p.id}
+                  onSelect={() => setSelected(p)}
+                />
               ))}
             </div>
           </div>
