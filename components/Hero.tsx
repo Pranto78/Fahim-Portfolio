@@ -1,11 +1,12 @@
 "use client";
-import { Github } from "lucide-react";
+import { FileText } from "lucide-react";
 import { THEME, GRAD } from "@/config/theme.config";
 import { PERSON } from "@/data/person";
 import { scrollToSection } from "@/lib/scrollToSection";
 import { Section } from "./ui";
 import { Orb } from "./Orb";
 import TiltCard from "./TiltCard";
+import SocialRail from "./SocialRail";
 
 export default function Hero() {
   return (
@@ -17,8 +18,17 @@ export default function Hero() {
         flexDirection: "column",
         justifyContent: "center",
         paddingTop: 140,
+        position: "relative",
       }}
     >
+      {/* vertical social rail on the far left */}
+      <div
+        className="social-rail"
+        style={{ position: "absolute", left: 8, top: "50%", transform: "translateY(-50%)", zIndex: 3 }}
+      >
+        <SocialRail />
+      </div>
+
       <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 48 }}>
         <div style={{ flex: "1 1 420px" }}>
           <div style={{ fontFamily: THEME.fontMono, fontSize: 13, color: THEME.green, marginBottom: 18 }}>
@@ -77,7 +87,7 @@ export default function Hero() {
               View Projects
             </button>
             <a
-              href={PERSON.github}
+              href={PERSON.cv}
               target="_blank"
               rel="noreferrer"
               style={{
@@ -95,7 +105,7 @@ export default function Hero() {
                 gap: 8,
               }}
             >
-              <Github size={18} /> GitHub
+              <FileText size={18} /> View CV
             </a>
           </div>
         </div>

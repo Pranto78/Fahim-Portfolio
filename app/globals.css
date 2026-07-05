@@ -181,6 +181,12 @@ a {
   transform: translateY(-3px);
 }
 
+@media (max-width: 900px) {
+  .social-rail {
+    display: none;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   * {
     animation: none !important;

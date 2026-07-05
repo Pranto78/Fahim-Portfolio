@@ -14,6 +14,9 @@ export const PERSON = {
   phone: "+880-1916-836881",
   linkedin: "https://www.linkedin.com/in/md-fahim-shahriyar-pranto/",
   github: "https://github.com/Pranto78",
+  instagram: "#", // TODO: add real Instagram URL
+  facebook: "#", // TODO: add real Facebook URL
+  cv: "#", // TODO: add CV link (e.g. Google Drive share link)
   oldPortfolio: "https://fahim-pranto.netlify.app/",
   education:
     "Bachelor of Science in Computer Science & Engineering (BSc in CSE), American International University-Bangladesh (AIUB), Dhaka. Expected graduation 2026. Coursework: Data Structures & Algorithms, DBMS, OOP, Web Engineering, Software Engineering.",
