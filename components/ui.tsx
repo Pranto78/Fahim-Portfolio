@@ -1,6 +1,7 @@
 "use client";
 import { ReactNode, CSSProperties } from "react";
 import { motion, useReducedMotion, Variants } from "framer-motion";
+import type { LucideIcon } from "lucide-react";
 import { THEME, GRAD } from "@/config/theme.config";
 
 export type RevealVariant = "fade" | "left" | "right" | "zoom" | "flip";
@@ -72,34 +73,66 @@ export function Section({
   );
 }
 
-export function Eyebrow({ children }: { children: ReactNode }) {
+export function Eyebrow({ icon: Icon, children }: { icon: LucideIcon; children: ReactNode }) {
+  const reduced = useReducedMotion();
   return (
     <motion.div
       initial={{ opacity: 0, x: -12 }}
       whileInView={{ opacity: 1, x: 0 }}
       viewport={{ once: false, amount: 0.6 }}
       transition={{ duration: 0.5 }}
-      style={{
-        display: "inline-flex",
-        alignItems: "center",
-        fontFamily: THEME.fontMono,
-        fontSize: 12,
-        letterSpacing: 2,
-        textTransform: "uppercase",
-        marginBottom: 14,
-        animation: "eyebrowDrift 3.5s ease-in-out infinite",
-      }}
+      style={{ display: "inline-flex", alignItems: "center", gap: 12, marginBottom: 18 }}
     >
-      <span style={{ color: THEME.cyan, opacity: 0.6 }}>{"// "}</span>
+      {/* animated icon chip */}
+      <div
+        style={{
+          position: "relative",
+          width: 34,
+          height: 34,
+          flexShrink: 0,
+          animation: reduced ? undefined : "badgeFloat 3.6s ease-in-out infinite",
+        }}
+      >
+        {/* breathing glow */}
+        <div
+          aria-hidden
+          style={{
+            position: "absolute",
+            inset: -3,
+            borderRadius: 12,
+            background: GRAD,
+            filter: "blur(8px)",
+            opacity: 0.5,
+            animation: reduced ? undefined : "iconGlow 3.2s ease-in-out infinite",
+          }}
+        />
+        <div
+          style={{
+            position: "relative",
+            width: 34,
+            height: 34,
+            borderRadius: 10,
+            display: "grid",
+            placeItems: "center",
+            background: THEME.bgSoft,
+            border: `1px solid ${THEME.cyan}55`,
+          }}
+        >
+          <Icon size={17} color={THEME.cyan} />
+        </div>
+      </div>
+
+      {/* refined label */}
       <span
         style={{
-          background: `linear-gradient(90deg, ${THEME.cyan}, ${THEME.violet}, ${THEME.cyan})`,
-          backgroundSize: "200% auto",
+          fontFamily: THEME.fontMono,
+          fontSize: 13,
+          letterSpacing: 3,
+          textTransform: "uppercase",
+          background: `linear-gradient(90deg, ${THEME.cyan}, ${THEME.violet})`,
           WebkitBackgroundClip: "text",
           backgroundClip: "text",
           WebkitTextFillColor: "transparent",
-          animation: "shimmer 4s linear infinite",
-          marginLeft: 4,
         }}
       >
         {children}

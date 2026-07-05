@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { Sparkles, Hand, ArrowUpRight } from "lucide-react";
+import { Sparkles, Hand, ArrowUpRight, Briefcase } from "lucide-react";
 import { THEME, GRAD } from "@/config/theme.config";
 import { PROJECTS, Project } from "@/data/projects";
 import { Section, Eyebrow, Heading } from "./ui";
@@ -52,7 +52,7 @@ export default function Projects() {
 
   return (
     <Section id="projects" variant="right">
-      <Eyebrow>Work</Eyebrow>
+      <Eyebrow icon={Briefcase}>Work</Eyebrow>
       <Heading>Projects I build at Octopi</Heading>
 
       {!expanded && (

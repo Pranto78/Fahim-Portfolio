@@ -134,6 +134,26 @@ a {
     transform: scaleX(1.15) scaleY(0.9);
   }
 }
+@keyframes badgeFloat {
+  0%,
+  100% {
+    transform: translateY(-2px);
+  }
+  50% {
+    transform: translateY(2px);
+  }
+}
+@keyframes iconGlow {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.12);
+  }
+}
 @keyframes shipBob {
   0%,
   100% {

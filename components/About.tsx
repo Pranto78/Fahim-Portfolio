@@ -1,7 +1,7 @@
 "use client";
 import { ReactNode, useState } from "react";
 import { motion, Variants } from "framer-motion";
-import { Github, ExternalLink, MapPin, Briefcase, GraduationCap } from "lucide-react";
+import { Github, ExternalLink, MapPin, Briefcase, GraduationCap, UserRound } from "lucide-react";
 import { THEME } from "@/config/theme.config";
 import { PERSON, PERSONAL } from "@/data/person";
 import { Section, Eyebrow, Heading } from "./ui";
@@ -79,7 +79,7 @@ function PersonalCard({ p }: { p: (typeof PERSONAL)[number] }) {
 export default function About() {
   return (
     <Section id="about" variant="fade">
-      <Eyebrow>About</Eyebrow>
+      <Eyebrow icon={UserRound}>About</Eyebrow>
       <Heading>Who I am</Heading>
       <div style={{ display: "flex", flexWrap: "wrap", gap: 40 }}>
         <motion.div

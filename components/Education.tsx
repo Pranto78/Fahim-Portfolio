@@ -1,4 +1,5 @@
 "use client";
+import { GraduationCap } from "lucide-react";
 import { THEME, GRAD } from "@/config/theme.config";
 import { Section, Eyebrow, Heading } from "./ui";
 
@@ -20,7 +21,7 @@ const items = [
 export default function Education() {
   return (
     <Section id="education" variant="flip">
-      <Eyebrow>Background</Eyebrow>
+      <Eyebrow icon={GraduationCap}>Background</Eyebrow>
       <Heading>Education &amp; Learning</Heading>
       <div style={{ position: "relative", paddingLeft: 28 }}>
         <div style={{ position: "absolute", left: 6, top: 6, bottom: 6, width: 2, background: GRAD, opacity: 0.4 }} />

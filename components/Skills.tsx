@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
+import { Layers } from "lucide-react";
 import { THEME } from "@/config/theme.config";
 import { Skill, chunkSkills } from "@/data/skills";
 import { useTypewriter } from "@/lib/useTypewriter";
@@ -216,7 +217,7 @@ export default function Skills() {
 
   return (
     <Section id="skills" variant="zoom">
-      <Eyebrow>Stack</Eyebrow>
+      <Eyebrow icon={Layers}>Stack</Eyebrow>
       <Heading>Skills &amp; Tools</Heading>
 
       <StickyModal skill={active} />
