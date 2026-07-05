@@ -16,6 +16,24 @@ const items = [
     d: "Jun 2025 – Feb 2026",
     note: "Full-stack: HTML, CSS, JS, React, Node, MongoDB. 10+ projects.",
   },
+  {
+    t: "College — HSC",
+    s: "Rajshahi Govt. Shikkha Board Model School & College",
+    d: "Higher Secondary",
+    note: "Science group.",
+  },
+  {
+    t: "High School — SSC & JSC",
+    s: "Rajshahi Govt. Shikkha Board Model School & College",
+    d: "Secondary",
+    note: "Science group (SSC) · JSC.",
+  },
+  {
+    t: "Elementary — PSC",
+    s: "Civil Aviation School, Rajshahi",
+    d: "Primary",
+    note: "Operated under the Rajshahi Airport (Civil Aviation) authorities.",
+  },
 ];
 
 export default function Education() {

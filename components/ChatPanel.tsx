@@ -22,14 +22,18 @@ export default function ChatPanel({
   const [msgs, setMsgs] = useState<Msg[]>([{ role: "assistant", content: intro }]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
-  const endRef = useRef<HTMLDivElement>(null);
+  const listRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setMsgs([{ role: "assistant", content: intro }]);
   }, [intro, projectId]);
 
   useEffect(() => {
-    endRef.current?.scrollIntoView({ behavior: "smooth" });
+    // Scroll only the chat's own list to the bottom — never the window/page.
+    const el = listRef.current;
+    if (!el) return;
+    const nearBottom = el.scrollHeight - el.scrollTop - el.clientHeight < 120;
+    if (nearBottom) el.scrollTo({ top: el.scrollHeight, behavior: "smooth" });
   }, [msgs, loading]);
 
   async function send(text?: string) {
@@ -47,6 +51,7 @@ export default function ChatPanel({
   return (
     <div style={{ display: "flex", flexDirection: "column", height: "100%", minHeight: 0 }}>
       <div
+        ref={listRef}
         style={{
           flex: 1,
           overflowY: "auto",
@@ -85,7 +90,6 @@ export default function ChatPanel({
             </div>
           </div>
         )}
-        <div ref={endRef} />
       </div>
 
       {suggestions && suggestions.length > 0 && (

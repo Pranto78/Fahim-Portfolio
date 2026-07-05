@@ -20,8 +20,39 @@ export const PERSON = {
   cert:
     "Complete Web Development Course — Programming Hero (Jun 2025 – Feb 2026). Full-stack: HTML, CSS, JS, React, Node, MongoDB. 10+ projects built.",
   languages: "English (Professional Working Proficiency), Bangla (Native).",
+  // Structured schooling. Results are gated: the AI reveals a GPA ONLY when
+  // explicitly asked for the result, and then only the number.
+  schooling: {
+    elementary: {
+      name: "Civil Aviation School, Rajshahi",
+      degree: "PSC (Primary School Certificate)",
+      gpa: "5.00",
+      note: "Operated under the Rajshahi Airport (Civil Aviation) authorities.",
+    },
+    highSchool: {
+      name: "Rajshahi Government Shikkha Board Model School and College",
+      degrees: [
+        { name: "JSC (Junior School Certificate)", gpa: "5.00" },
+        { name: "SSC (Secondary, Science group)", gpa: "4.94" },
+      ],
+    },
+    college: {
+      name: "Rajshahi Government Shikkha Board Model School and College",
+      degree: "HSC (Higher Secondary, Science group)",
+      gpa: "5.00",
+    },
+  },
+  interests:
+    "Passionate about traveling and exploring different cultures, landscapes and natural wonders — especially scenic beauty, mountains, lakes, islands, beaches, waterfalls and peaceful environments.",
+  personality:
+    "Enjoys learning about new places, experiencing different cultures and creating memorable travel experiences; prefers destinations with breathtaking landscapes and calm surroundings.",
+  bucketList: [
+    "Nepal", "New Zealand", "Iceland", "Spain", "Switzerland", "The Maldives", "Bora Bora",
+    "Bali", "Santorini (Greece)", "The Faroe Islands", "The Lofoten Islands (Norway)",
+    "The Azores (Portugal)", "Fiji", "Seychelles",
+  ],
   // Edit these anytime:
-  hobbies: ["Building side projects", "Exploring new web/AI tech", "Football", "Gaming"],
+  hobbies: ["Traveling & exploring", "Building side projects", "Exploring new web/AI tech", "Football", "Gaming"],
 };
 
 // Personal projects — minimal cards with deploy/source links (About section)
