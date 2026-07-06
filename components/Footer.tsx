@@ -1,7 +1,6 @@
 "use client";
 import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
-import { Github, Linkedin, Mail, Phone } from "lucide-react";
 import { THEME } from "@/config/theme.config";
 import { PERSON } from "@/data/person";
 
@@ -9,12 +8,6 @@ const EASE = [0.16, 1, 0.3, 1] as const;
 
 export default function Footer() {
   const reduced = useReducedMotion();
-  const links = [
-    { icon: <Github size={20} />, href: PERSON.github },
-    { icon: <Linkedin size={20} />, href: PERSON.linkedin },
-    { icon: <Mail size={20} />, href: `mailto:${PERSON.email}` },
-    { icon: <Phone size={20} />, href: `tel:${PERSON.phone}` },
-  ];
   return (
     <footer style={{ padding: "60px 5vw 40px", borderTop: `1px solid ${THEME.border}`, marginTop: 40 }}>
       <div
@@ -59,28 +52,6 @@ export default function Footer() {
               {PERSON.email} · {PERSON.location}
             </div>
           </div>
-        </div>
-        <div style={{ display: "flex", gap: 12 }}>
-          {links.map((l, i) => (
-            <a
-              key={i}
-              href={l.href}
-              target="_blank"
-              rel="noreferrer"
-              style={{
-                width: 44,
-                height: 44,
-                borderRadius: 12,
-                display: "grid",
-                placeItems: "center",
-                background: THEME.bgSoft,
-                border: `1px solid ${THEME.border}`,
-                color: THEME.text,
-              }}
-            >
-              {l.icon}
-            </a>
-          ))}
         </div>
       </div>
       <div style={{ maxWidth: 1200, margin: "30px auto 0", fontSize: 12.5, color: THEME.muted, fontFamily: THEME.fontMono }}>

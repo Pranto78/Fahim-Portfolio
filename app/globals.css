@@ -186,6 +186,100 @@ a {
   transform: translateY(-3px);
 }
 
+.contact-label {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.contact-field {
+  width: 100%;
+  padding: 12px 13px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 11px;
+  outline: none;
+  background: #10141c;
+  color: var(--text);
+  font: 400 13.5px/1.5 "Inter", sans-serif;
+  transition: border-color 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.contact-field::placeholder {
+  color: #66727f;
+}
+
+.contact-field:focus {
+  border-color: rgba(0, 240, 255, 0.5);
+  box-shadow: 0 0 0 3px rgba(0, 240, 255, 0.08), 0 0 20px rgba(0, 240, 255, 0.06);
+}
+
+.contact-message {
+  min-height: 170px;
+  resize: vertical;
+}
+
+.contact-icon {
+  width: 38px;
+  height: 38px;
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  border-radius: 11px;
+  color: var(--cyan);
+  background: rgba(0, 240, 255, 0.08);
+  border: 1px solid rgba(0, 240, 255, 0.16);
+}
+
+.contact-ai-button,
+.contact-undo-button,
+.contact-submit-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  border: 0;
+  cursor: pointer;
+  font-family: "Inter", sans-serif;
+}
+
+.contact-ai-button {
+  padding: 7px 11px;
+  border-radius: 9px;
+  color: #d6a8ff;
+  background: rgba(177, 78, 255, 0.08);
+  border: 1px solid rgba(177, 78, 255, 0.35);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.contact-undo-button {
+  padding: 6px 8px;
+  background: transparent;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.contact-submit-button {
+  min-height: 42px;
+  padding: 10px 18px;
+  border-radius: 11px;
+  color: #071014;
+  background: linear-gradient(135deg, var(--cyan), #7c69ff);
+  box-shadow: 0 8px 24px rgba(0, 240, 255, 0.14);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.contact-ai-button:disabled,
+.contact-submit-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
 @media (max-width: 900px) {
   .social-rail {
     display: none;
