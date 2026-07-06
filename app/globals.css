@@ -81,19 +81,24 @@ a {
 }
 @keyframes scrollL {
   from {
-    transform: translateX(0);
+    transform: translate3d(0, 0, 0);
   }
   to {
-    transform: translateX(-50%);
+    transform: translate3d(calc(-50% - 7px), 0, 0);
   }
 }
 @keyframes scrollR {
   from {
-    transform: translateX(-50%);
+    transform: translate3d(calc(-50% - 7px), 0, 0);
   }
   to {
-    transform: translateX(0);
+    transform: translate3d(0, 0, 0);
   }
+}
+
+.skills-marquee-track {
+  will-change: transform;
+  backface-visibility: hidden;
 }
 
 @keyframes caret {

@@ -8,6 +8,10 @@ import { useTypewriter } from "@/lib/useTypewriter";
 import { Section, Eyebrow, Heading } from "./ui";
 import TiltCard from "./TiltCard";
 
+const TILE_WIDTH = 150;
+const MARQUEE_GAP = 14;
+const MARQUEE_SPEED = 10; // pixels per second — intentionally calm and easy to scan
+
 function SkillIcon({ skill, size }: { skill: Skill; size: number }) {
   if (skill.icon) {
     const Icon = skill.icon;
@@ -167,16 +171,14 @@ function SkillTile({ skill, onHover }: { skill: Skill; onHover: (s: Skill | null
 function MarqueeRow({
   row,
   reverse,
-  duration,
   onHover,
 }: {
   row: Skill[];
   reverse: boolean;
-  duration: number;
   onHover: (s: Skill | null) => void;
 }) {
   const [paused, setPaused] = useState(false);
-  const items = [...row, ...row]; // duplicated for a seamless -50% loop
+  const duration = (row.length * (TILE_WIDTH + MARQUEE_GAP)) / MARQUEE_SPEED;
 
   return (
     <div
@@ -193,16 +195,25 @@ function MarqueeRow({
       }}
     >
       <div
+        className="skills-marquee-track"
         style={{
           display: "flex",
-          gap: 14,
+          gap: MARQUEE_GAP,
           width: "max-content",
           animation: `${reverse ? "scrollR" : "scrollL"} ${duration}s linear infinite`,
           animationPlayState: paused ? "paused" : "running",
         }}
       >
-        {items.map((s, i) => (
-          <SkillTile key={`${s.name}-${i}`} skill={s} onHover={onHover} />
+        {[false, true].map((duplicate) => (
+          <div
+            key={duplicate ? "duplicate" : "original"}
+            aria-hidden={duplicate || undefined}
+            style={{ display: "flex", gap: MARQUEE_GAP }}
+          >
+            {row.map((s) => (
+              <SkillTile key={s.name} skill={s} onHover={onHover} />
+            ))}
+          </div>
         ))}
       </div>
     </div>
@@ -213,7 +224,6 @@ export default function Skills() {
   const [active, setActive] = useState<Skill | null>(null);
   const reduced = useReducedMotion();
   const rows = chunkSkills(3);
-  const durations = [40, 46, 36];
 
   return (
     <Section id="skills" variant="zoom">
@@ -238,7 +248,6 @@ export default function Skills() {
               key={i}
               row={row}
               reverse={i % 2 === 0} /* row 1 → right, row 2 → left, row 3 → right … */
-              duration={durations[i % durations.length]}
               onHover={setActive}
             />
           ))}
