@@ -3,6 +3,7 @@
 // =========================================================================
 export const PERSON = {
   name: "MD. Fahim Shahriyar Pranto",
+  logo: "https://i.ibb.co.com/hxwgLyVM/fsp-logo-icon.jpg",
   role: "Junior Software Engineer",
   team: "Technology Team · Octopi Digital",
   empId: "ODL104",
@@ -55,7 +56,16 @@ export const PERSON = {
     "The Azores (Portugal)", "Fiji", "Seychelles",
   ],
   // Edit these anytime:
-  hobbies: ["Traveling & exploring", "Building side projects", "Exploring new web/AI tech", "Football", "Gaming"],
+  hobbies: [
+    "Traveling & exploring",
+    "Building side projects",
+    "Exploring new web/AI tech",
+    "Football",
+    "Gaming",
+    "Movies",
+    "TV Series",
+    "Anime",
+  ],
 };
 
 // Personal projects — minimal cards with deploy/source links (About section)

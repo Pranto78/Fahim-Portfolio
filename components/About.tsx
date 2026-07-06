@@ -1,13 +1,39 @@
 "use client";
 import { ReactNode, useState } from "react";
-import { motion, Variants } from "framer-motion";
-import { Github, ExternalLink, MapPin, Briefcase, GraduationCap, UserRound } from "lucide-react";
+import { motion, Variants, useReducedMotion } from "framer-motion";
+import {
+  Github,
+  ExternalLink,
+  MapPin,
+  Briefcase,
+  GraduationCap,
+  UserRound,
+  PlaneTakeoff,
+  CodeXml,
+  BrainCircuit,
+  Gamepad2,
+  Clapperboard,
+  Tv,
+} from "lucide-react";
+import { FaFutbol } from "react-icons/fa6";
+import { SiCrunchyroll } from "react-icons/si";
 import { THEME } from "@/config/theme.config";
 import { PERSON, PERSONAL } from "@/data/person";
 import { Section, Eyebrow, Heading } from "./ui";
 import SnakeBorder from "./SnakeBorder";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
+
+const HOBBY_META: Record<string, { icon: ReactNode; color: string }> = {
+  "Traveling & exploring": { icon: <PlaneTakeoff size={15} />, color: THEME.cyan },
+  "Building side projects": { icon: <CodeXml size={15} />, color: THEME.violet },
+  "Exploring new web/AI tech": { icon: <BrainCircuit size={15} />, color: THEME.green },
+  Football: { icon: <FaFutbol size={15} />, color: "#4ADE80" },
+  Gaming: { icon: <Gamepad2 size={15} />, color: "#A78BFA" },
+  Movies: { icon: <Clapperboard size={15} />, color: "#FB7185" },
+  "TV Series": { icon: <Tv size={15} />, color: "#60A5FA" },
+  Anime: { icon: <SiCrunchyroll size={15} />, color: "#F47521" },
+};
 
 // Columns slide in from opposite sides.
 const colFrom = (dir: -1 | 1): Variants => ({
@@ -31,6 +57,68 @@ function Row({ icon, label }: { icon: ReactNode; label: string }) {
       <span style={{ color: THEME.cyan }}>{icon}</span>
       {label}
     </div>
+  );
+}
+
+function HobbyChip({ label }: { label: string }) {
+  const reduced = useReducedMotion();
+  const meta = HOBBY_META[label];
+
+  return (
+    <motion.span
+      initial="rest"
+      whileHover="hover"
+      variants={{
+        rest: { y: 0, scale: 1 },
+        hover: { y: reduced ? 0 : -2, scale: reduced ? 1 : 1.025 },
+      }}
+      transition={{ duration: reduced ? 0 : 0.38, ease: EASE }}
+      style={{
+        position: "relative",
+        display: "inline-flex",
+        alignItems: "center",
+        gap: 8,
+        fontSize: 13,
+        padding: "7px 14px",
+        borderRadius: 20,
+        background: THEME.bgSoft,
+        border: `1px solid ${THEME.border}`,
+        color: THEME.text,
+        cursor: "default",
+      }}
+    >
+      <motion.span
+        aria-hidden
+        variants={{ rest: { opacity: 0 }, hover: { opacity: 1 } }}
+        transition={{ duration: reduced ? 0 : 0.4, ease: EASE }}
+        style={{
+          position: "absolute",
+          inset: -1,
+          borderRadius: 20,
+          border: `1px solid ${meta.color}88`,
+          boxShadow: `0 0 20px ${meta.color}22`,
+          pointerEvents: "none",
+        }}
+      />
+      <motion.span
+        aria-hidden
+        variants={{
+          rest: { color: THEME.muted, opacity: 0.75 },
+          hover: { color: meta.color, opacity: 1 },
+        }}
+        transition={{ duration: reduced ? 0 : 0.35, ease: EASE }}
+        style={{ position: "relative", zIndex: 1, display: "grid", placeItems: "center" }}
+      >
+        {meta.icon}
+      </motion.span>
+      <motion.span
+        variants={{ rest: { color: THEME.text }, hover: { color: THEME.heading } }}
+        transition={{ duration: reduced ? 0 : 0.35, ease: EASE }}
+        style={{ position: "relative", zIndex: 1 }}
+      >
+        {label}
+      </motion.span>
+    </motion.span>
   );
 }
 
@@ -109,19 +197,7 @@ export default function About() {
           </h3>
           <div style={{ display: "flex", flexWrap: "wrap", gap: 10 }}>
             {PERSON.hobbies.map((h) => (
-              <span
-                key={h}
-                style={{
-                  fontSize: 13,
-                  padding: "7px 14px",
-                  borderRadius: 20,
-                  background: THEME.bgSoft,
-                  border: `1px solid ${THEME.border}`,
-                  color: THEME.text,
-                }}
-              >
-                {h}
-              </span>
+              <HobbyChip key={h} label={h} />
             ))}
           </div>
         </motion.div>

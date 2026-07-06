@@ -1,9 +1,11 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
+import Image from "next/image";
 import { createPortal } from "react-dom";
 import { motion, AnimatePresence, useMotionValue, useSpring, useReducedMotion } from "framer-motion";
 import { THEME, GRAD } from "@/config/theme.config";
 import { NAV } from "@/data/skills";
+import { PERSON } from "@/data/person";
 import { scrollToSection } from "@/lib/scrollToSection";
 import Spaceship from "./Spaceship";
 
@@ -105,19 +107,34 @@ export default function Navbar({ active }: { active: string }) {
             padding: "20px 5vw",
           }}
         >
-          <div
+          <motion.button
             onClick={() => go("hero")}
+            aria-label="Go to home"
+            whileHover={reduced ? undefined : { y: -1, scale: 1.04 }}
+            whileTap={reduced ? undefined : { scale: 0.98 }}
+            transition={{ type: "tween", duration: 0.35, ease: EASE }}
             style={{
               cursor: "pointer",
-              fontFamily: THEME.fontDisplay,
-              fontWeight: 700,
-              fontSize: 18,
-              color: THEME.heading,
-              letterSpacing: 0.5,
+              position: "relative",
+              width: 40,
+              height: 40,
+              padding: 0,
+              overflow: "hidden",
+              borderRadius: 12,
+              background: THEME.bgSoft,
+              border: `1px solid ${THEME.cyan}44`,
+              boxShadow: `0 0 20px ${THEME.cyan}18`,
             }}
           >
-            FSP<span style={{ color: THEME.cyan }}>.</span>
-          </div>
+            <Image
+              src={PERSON.logo}
+              alt="FSP brand logo"
+              fill
+              priority
+              sizes="40px"
+              style={{ objectFit: "cover" }}
+            />
+          </motion.button>
           <div style={{ display: "flex", gap: 4 }}>
             {NAV.map((n) => (
               <button
