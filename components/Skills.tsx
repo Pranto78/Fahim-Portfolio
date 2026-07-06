@@ -110,8 +110,9 @@ function SkillTile({ skill, onHover }: { skill: Skill; onHover: (s: Skill | null
   const [hover, setHover] = useState(false);
   return (
     <TiltCard
-      max={14}
-      scale={1.05}
+      max={6}
+      scale={1.015}
+      motionPreset="calm"
       style={{ borderRadius: 14, width: 150, flex: "0 0 auto" }}
     >
       <div
@@ -130,39 +131,41 @@ function SkillTile({ skill, onHover }: { skill: Skill; onHover: (s: Skill | null
           borderRadius: 14,
           height: 118,
           background: THEME.bgSoft,
-          border: `1px solid ${hover ? skill.color + "88" : THEME.border}`,
-          boxShadow: hover ? `0 0 26px ${skill.color}33` : "none",
-          transition: "border-color .25s, box-shadow .25s",
+          border: `1px solid ${THEME.border}`,
           cursor: "default",
+          position: "relative",
         }}
       >
+        <motion.div
+          aria-hidden
+          initial={false}
+          animate={{ opacity: hover ? 1 : 0 }}
+          transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+          style={{
+            position: "absolute",
+            inset: -1,
+            borderRadius: 14,
+            border: `1px solid ${skill.color}88`,
+            boxShadow: `0 0 22px ${skill.color}2b`,
+            pointerEvents: "none",
+          }}
+        />
         <div style={{ transform: "translateZ(30px)" }}>
           <SkillIcon skill={skill} size={34} />
         </div>
-        <AnimatePresence>
-          {hover ? (
-            <motion.div
-              key="name"
-              initial={{ opacity: 0, y: 6 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 6 }}
-              transition={{ duration: 0.2 }}
-              style={{
-                fontFamily: THEME.fontMono,
-                fontSize: 12.5,
-                color: skill.color,
-                fontWeight: 600,
-                whiteSpace: "nowrap",
-              }}
-            >
-              {skill.name}
-            </motion.div>
-          ) : (
-            <div style={{ fontFamily: THEME.fontMono, fontSize: 12.5, color: THEME.muted, whiteSpace: "nowrap" }}>
-              {skill.name}
-            </div>
-          )}
-        </AnimatePresence>
+        <motion.div
+          initial={false}
+          animate={{ color: hover ? skill.color : THEME.muted }}
+          transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+          style={{
+            fontFamily: THEME.fontMono,
+            fontSize: 12.5,
+            fontWeight: 500,
+            whiteSpace: "nowrap",
+          }}
+        >
+          {skill.name}
+        </motion.div>
       </div>
     </TiltCard>
   );

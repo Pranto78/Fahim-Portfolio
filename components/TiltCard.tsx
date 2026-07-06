@@ -14,6 +14,7 @@ export default function TiltCard({
   max = 10,
   scale = 1.02,
   glare = true,
+  motionPreset = "default",
   onClick,
 }: {
   children: ReactNode;
@@ -22,15 +23,20 @@ export default function TiltCard({
   max?: number;
   scale?: number;
   glare?: boolean;
+  motionPreset?: "default" | "calm";
   onClick?: () => void;
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const reduced = useReducedMotion();
+  const calm = motionPreset === "calm";
 
   const mx = useMotionValue(0.5);
   const my = useMotionValue(0.5);
-  const sx = useSpring(mx, { stiffness: 150, damping: 22 });
-  const sy = useSpring(my, { stiffness: 150, damping: 22 });
+  const spring = calm
+    ? { stiffness: 80, damping: 26, mass: 1.1 }
+    : { stiffness: 150, damping: 22, mass: 1 };
+  const sx = useSpring(mx, spring);
+  const sy = useSpring(my, spring);
 
   const rotateY = useTransform(sx, [0, 1], [-max, max]);
   const rotateX = useTransform(sy, [0, 1], [max, -max]);
@@ -57,7 +63,11 @@ export default function TiltCard({
       onMouseLeave={reset}
       onClick={onClick}
       whileHover={{ scale }}
-      transition={{ type: "tween", duration: 0.18, ease: "easeOut" }}
+      transition={
+        calm
+          ? { type: "tween", duration: 0.45, ease: [0.22, 1, 0.36, 1] }
+          : { type: "tween", duration: 0.18, ease: "easeOut" }
+      }
       style={{
         rotateX,
         rotateY,
@@ -85,6 +95,11 @@ export default function TiltCard({
             ),
           }}
           whileHover={{ opacity: 1 }}
+          transition={
+            calm
+              ? { duration: 0.45, ease: [0.22, 1, 0.36, 1] }
+              : undefined
+          }
         />
       )}
     </motion.div>
