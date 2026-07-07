@@ -49,11 +49,12 @@ export default function ChatPanel({
   }
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", height: "100%", minHeight: 0 }}>
+    <div style={{ display: "flex", flexDirection: "column", height: "100%", minHeight: 0, minWidth: 0 }}>
       <div
         ref={listRef}
         style={{
           flex: 1,
+          minHeight: 0,
           overflowY: "auto",
           padding: "4px 2px",
           display: "flex",
@@ -93,7 +94,7 @@ export default function ChatPanel({
       </div>
 
       {suggestions && suggestions.length > 0 && (
-        <div style={{ display: "flex", flexWrap: "wrap", gap: 8, padding: "10px 0 6px" }}>
+        <div style={{ flex: "0 0 auto", display: "flex", flexWrap: "wrap", gap: 8, padding: "10px 0 6px" }}>
           {suggestions.map((s) => (
             <button
               key={s.label}
@@ -115,7 +116,7 @@ export default function ChatPanel({
         </div>
       )}
 
-      <div style={{ display: "flex", gap: 8, paddingTop: 8 }}>
+      <div style={{ flex: "0 0 auto", display: "flex", gap: 8, paddingTop: 8 }}>
         <input
           value={input}
           onChange={(e) => setInput(e.target.value)}
@@ -123,6 +124,7 @@ export default function ChatPanel({
           placeholder="Ask something…"
           style={{
             flex: 1,
+            minWidth: 0,
             padding: "11px 14px",
             borderRadius: 12,
             outline: "none",

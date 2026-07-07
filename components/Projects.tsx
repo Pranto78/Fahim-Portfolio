@@ -263,7 +263,8 @@ export default function Projects() {
               onDrop={onDrop}
               style={{
                 flex: "1 1 380px",
-                minHeight: 460,
+                height: "clamp(460px, 70vh, 640px)",
+                minHeight: 0,
                 borderRadius: 18,
                 padding: 16,
                 background: THEME.glass,
@@ -272,6 +273,7 @@ export default function Projects() {
                 transition: "border-color .2s",
                 display: "flex",
                 flexDirection: "column",
+                overflow: "hidden",
               }}
             >
               {!selected ? (
