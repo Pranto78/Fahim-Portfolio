@@ -50,7 +50,7 @@ const ORBITS: Orbit[] = [
 
 const ORBIT_LINE = "rgba(210, 218, 232, 0.72)";
 
-const SPEED = [8.2, 6.4, 5.1];
+const SPEED = [6.4, 5.1, 4.1];
 
 function ReactLogo() {
   return (
@@ -250,12 +250,13 @@ export default function OrbitalPortal({
   const frameRef = useRef<number | null>(null);
   const startRef = useRef(0);
   const planetRefs = useRef<Record<string, HTMLDivElement | null>>({});
+  const planetLayerRefs = useRef<Record<string, number>>({});
   const reduced = useReducedMotion();
   const [scale, setScale] = useState(0.62);
   const [stars, setStars] = useState<Star[]>([]);
 
   useEffect(() => {
-    setStars(makeStars(120));
+    setStars(makeStars(72));
   }, []);
 
   useEffect(() => {
@@ -282,7 +283,11 @@ export default function OrbitalPortal({
         const frame = planetFrame(planet, seconds, freeze);
         el.style.transform = `translate3d(${frame.x}px, ${frame.y}px, 0) translate(-50%, -50%) scale(${frame.scale})`;
         el.style.opacity = String(frame.opacity);
-        el.style.zIndex = String(frame.zIndex);
+
+        if (planetLayerRefs.current[planet.key] !== frame.zIndex) {
+          planetLayerRefs.current[planet.key] = frame.zIndex;
+          el.style.zIndex = String(frame.zIndex);
+        }
       });
     };
 
@@ -344,10 +349,7 @@ export default function OrbitalPortal({
                     top: `${star.y}%`,
                     width: star.size,
                     height: star.size,
-                    "--star-delay": `${star.delay}s`,
-                    "--star-duration": `${star.duration}s`,
-                    "--star-o0": star.opacityStart,
-                    "--star-o1": star.opacityEnd,
+                    opacity: star.opacityEnd * 0.72,
                   } as CSSProperties
                 }
               />
@@ -433,6 +435,7 @@ export default function OrbitalPortal({
           aspect-ratio: ${STAGE_W} / ${STAGE_H};
           position: relative;
           isolation: isolate;
+          contain: layout paint;
           overflow: visible;
         }
 
@@ -455,6 +458,7 @@ export default function OrbitalPortal({
 
         .portal-scene {
           z-index: 1;
+          contain: layout paint;
         }
 
         .portal-stars {
@@ -468,9 +472,6 @@ export default function OrbitalPortal({
           position: absolute;
           border-radius: 50%;
           background: #dfe9ff;
-          animation: portalTwinkle var(--star-duration) ease-in-out infinite alternate;
-          animation-delay: var(--star-delay);
-          opacity: var(--star-o0);
         }
 
         .portal-orbits {
@@ -546,7 +547,7 @@ export default function OrbitalPortal({
           height: 38%;
           z-index: 1;
           background: linear-gradient(180deg, transparent, rgba(90, 150, 255, 0.1), transparent);
-          animation: portalScan 5.5s ease-in-out infinite;
+          opacity: 0.28;
         }
 
         .portal-photo {
@@ -625,6 +626,8 @@ export default function OrbitalPortal({
           border-radius: 50%;
           display: grid;
           place-items: center;
+          isolation: isolate;
+          overflow: hidden;
           background: radial-gradient(circle at 34% 30%, var(--planet-base), var(--planet-dark) 78%);
           box-shadow:
             inset -6px -8px 16px rgba(0, 0, 0, 0.55),
@@ -644,6 +647,7 @@ export default function OrbitalPortal({
           background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.9), transparent 70%);
           filter: blur(1px);
           opacity: 0.85;
+          pointer-events: none;
         }
 
         .portal-ball :global(svg) {
@@ -677,25 +681,6 @@ export default function OrbitalPortal({
           }
         }
 
-        @keyframes portalScan {
-          0%,
-          100% {
-            transform: translateY(-30%);
-          }
-          50% {
-            transform: translateY(150%);
-          }
-        }
-
-        @keyframes portalTwinkle {
-          from {
-            opacity: var(--star-o0);
-          }
-          to {
-            opacity: var(--star-o1);
-          }
-        }
-
         @media (max-width: 680px) {
           .orbital-portal {
             width: min(94vw, 430px);
@@ -703,11 +688,6 @@ export default function OrbitalPortal({
         }
 
         @media (prefers-reduced-motion: reduce) {
-          .portal-card-scan,
-          .portal-star {
-            animation: none;
-          }
-
           .portal-stars {
             transform: none;
             transition: none;

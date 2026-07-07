@@ -198,6 +198,7 @@ a {
   flex: 1 1 0;
   min-width: 0;
   max-width: 650px;
+  padding-left: clamp(28px, 3vw, 56px);
   position: relative;
   z-index: 2;
 }
@@ -536,6 +537,7 @@ a {
 
   .hero-copy {
     max-width: 100%;
+    padding-left: 0;
   }
 
   .hero-social {
