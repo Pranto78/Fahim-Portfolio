@@ -4,9 +4,8 @@ import { THEME, GRAD } from "@/config/theme.config";
 import { PERSON } from "@/data/person";
 import { scrollToSection } from "@/lib/scrollToSection";
 import { Section } from "./ui";
-import { Orb } from "./Orb";
-import TiltCard from "./TiltCard";
 import SocialRail from "./SocialRail";
+import OrbitalPortal from "./OrbitalPortal";
 
 export default function Hero() {
   return (
@@ -18,26 +17,19 @@ export default function Hero() {
         flexDirection: "column",
         justifyContent: "center",
         paddingTop: 140,
+        maxWidth: 1560,
         position: "relative",
       }}
     >
-      {/* vertical social rail on the far left */}
-      <div
-        className="social-rail"
-        style={{ position: "absolute", left: 8, top: "50%", transform: "translateY(-50%)", zIndex: 3 }}
-      >
-        <SocialRail />
-      </div>
-
-      <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 48 }}>
-        <div style={{ flex: "1 1 420px" }}>
+      <div className="hero-content">
+        <div className="hero-copy">
           <div style={{ fontFamily: THEME.fontMono, fontSize: 13, color: THEME.green, marginBottom: 18 }}>
             ● Available · {PERSON.location}
           </div>
           <h1
             style={{
               fontFamily: THEME.fontDisplay,
-              fontSize: "clamp(40px,6vw,72px)",
+              fontSize: "clamp(40px,5.2vw,68px)",
               fontWeight: 700,
               lineHeight: 1.02,
               color: THEME.heading,
@@ -110,30 +102,12 @@ export default function Hero() {
           </div>
         </div>
 
-        <div style={{ flex: "0 0 auto", display: "grid", placeItems: "center", position: "relative" }}>
-          {/* Replace this block with your photo later */}
-          <TiltCard max={16} scale={1.04} style={{ borderRadius: "50%" }}>
-            <div
-              style={{
-                width: 260,
-                height: 260,
-                borderRadius: "50%",
-                display: "grid",
-                placeItems: "center",
-                border: `1px solid ${THEME.border}`,
-                background: THEME.bgSoft,
-                position: "relative",
-                overflow: "hidden",
-              }}
-            >
-              <div style={{ transform: "translateZ(40px)" }}>
-                <Orb size={150} />
-              </div>
-              <div style={{ position: "absolute", bottom: 18, fontFamily: THEME.fontMono, fontSize: 11, color: THEME.muted }}>
-                your photo here
-              </div>
-            </div>
-          </TiltCard>
+        <div className="hero-social social-rail">
+          <SocialRail />
+        </div>
+
+        <div className="hero-visual">
+          <OrbitalPortal photoAlt={PERSON.name} />
         </div>
       </div>
     </Section>
