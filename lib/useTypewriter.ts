@@ -46,7 +46,12 @@ type CyclePhase = "typing" | "holding" | "deleting";
  */
 export function useTypewriterCycle(
   phrases: string[],
-  { typeSpeed = 45, deleteSpeed = 25, hold = 1600 }: { typeSpeed?: number; deleteSpeed?: number; hold?: number } = {}
+  {
+    typeSpeed = 45,
+    deleteSpeed = 25,
+    hold = 1600,
+    enabled = true,
+  }: { typeSpeed?: number; deleteSpeed?: number; hold?: number; enabled?: boolean } = {}
 ) {
   const [out, setOut] = useState("");
   const [index, setIndex] = useState(0);
@@ -58,6 +63,13 @@ export function useTypewriterCycle(
   }, []);
 
   useEffect(() => {
+    if (!enabled) {
+      setOut("");
+      setIndex(0);
+      setPhase("typing");
+      return;
+    }
+
     if (phrases.length === 0) return;
     const current = phrases[index % phrases.length];
 
@@ -89,7 +101,7 @@ export function useTypewriterCycle(
     }
 
     return () => clearTimeout(timer!);
-  }, [out, index, phase, reduced, phrases, typeSpeed, deleteSpeed, hold]);
+  }, [out, index, phase, reduced, phrases, typeSpeed, deleteSpeed, hold, enabled]);
 
   return out;
 }

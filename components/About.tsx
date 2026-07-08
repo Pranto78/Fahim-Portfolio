@@ -178,7 +178,7 @@ export default function About() {
           style={{ flex: "1 1 340px" }}
         >
           <p style={{ fontSize: 16.5, color: THEME.text, lineHeight: 1.75 }}>
-            I&apos;m a {PERSON.role} on the Technology Team at{" "}
+            My name is {PERSON.name}. I&apos;m a {PERSON.role} on the Technology Team at{" "}
             <a href={PERSON.companyUrl} target="_blank" rel="noreferrer" style={{ color: THEME.cyan, textDecoration: "none" }}>
               Octopi Digital
             </a>

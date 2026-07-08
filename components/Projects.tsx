@@ -194,7 +194,7 @@ export default function Projects() {
   return (
     <Section id="projects" variant="right">
       <Eyebrow icon={Briefcase}>Work</Eyebrow>
-      <Heading>Projects I build at Octopi</Heading>
+      <Heading>Projects I contributed at Octopi</Heading>
 
       {!expanded && (
         <>

@@ -1,13 +1,118 @@
 "use client";
-import { FileText } from "lucide-react";
+import { useEffect, useState } from "react";
+import { FileText, MapPin } from "lucide-react";
+import { BsOpenai } from "react-icons/bs";
+import { SiClaude, SiGooglegemini, SiPerplexity } from "react-icons/si";
 import { THEME, GRAD } from "@/config/theme.config";
 import { PERSON } from "@/data/person";
 import { scrollToSection } from "@/lib/scrollToSection";
+import { useTypewriterCycle } from "@/lib/useTypewriter";
 import { Section } from "./ui";
 import SocialRail from "./SocialRail";
 import OrbitalPortal from "./OrbitalPortal";
 
+const GREETING_INTRO_PHRASES = ["Hello, I'm Fahim", "Nice to meet you", "Welcome to my web"];
+const DIRECT_INTRO_PHRASES = ["I'm Fahim", "Nice to meet you", "Welcome to my web"];
+
+function getLocalGreeting() {
+  const hour = new Date().getHours();
+
+  if (hour >= 5 && hour < 12) return "Good morning,";
+  if (hour >= 12 && hour < 17) return "Good afternoon,";
+  if (hour >= 17 && hour < 21) return "Good evening,";
+  return "";
+}
+
+function prefersReducedMotion() {
+  if (typeof window === "undefined") return false;
+  return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+}
+
+function renderTypedIntro(text: string) {
+  const namePrefix = ["Hello, I'm ", "I'm "].find((prefix) => text.startsWith(prefix));
+
+  if (!namePrefix || text.length <= namePrefix.length) return text;
+
+  return (
+    <>
+      {text.slice(0, namePrefix.length)}
+      <span className="hero-typed-gradient">{text.slice(namePrefix.length)}</span>
+    </>
+  );
+}
+
+function AiLogoSlot({ className = "" }: { className?: string }) {
+  return (
+    <span className={`hero-ai-logo-slot ${className}`} aria-hidden>
+      <span className="hero-ai-logo-mark hero-ai-logo-claude">
+        <SiClaude />
+      </span>
+      <span className="hero-ai-logo-mark hero-ai-logo-gpt">
+        <BsOpenai />
+      </span>
+      <span className="hero-ai-logo-mark hero-ai-logo-gemini">
+        <SiGooglegemini />
+      </span>
+      <span className="hero-ai-logo-mark hero-ai-logo-perplexity">
+        <SiPerplexity />
+      </span>
+    </span>
+  );
+}
+
 export default function Hero() {
+  const [greeting, setGreeting] = useState<string | null>(null);
+  const [typedGreeting, setTypedGreeting] = useState("");
+  const [greetingDone, setGreetingDone] = useState(false);
+  const introPhrases = greeting ? GREETING_INTRO_PHRASES : DIRECT_INTRO_PHRASES;
+  const typedIntro = useTypewriterCycle(introPhrases, {
+    typeSpeed: 110,
+    deleteSpeed: 60,
+    hold: 2600,
+    enabled: greeting !== null,
+  });
+
+  useEffect(() => {
+    setGreeting(getLocalGreeting());
+  }, []);
+
+  useEffect(() => {
+    if (greeting === null) return;
+
+    if (!greeting) {
+      setTypedGreeting("");
+      setGreetingDone(true);
+      return;
+    }
+
+    if (prefersReducedMotion()) {
+      setTypedGreeting(greeting);
+      setGreetingDone(true);
+      return;
+    }
+
+    setTypedGreeting("");
+    setGreetingDone(false);
+    let index = 0;
+    let timer: ReturnType<typeof setTimeout>;
+
+    const typeNext = () => {
+      index += 1;
+      setTypedGreeting(greeting.slice(0, index));
+
+      if (index >= greeting.length) {
+        timer = setTimeout(() => setGreetingDone(true), 380);
+        return;
+      }
+
+      const cadence = 82 + (index % 4) * 9;
+      timer = setTimeout(typeNext, cadence);
+    };
+
+    timer = setTimeout(typeNext, 110);
+    return () => clearTimeout(timer);
+  }, [greeting]);
+
   return (
     <Section
       id="hero"
@@ -23,35 +128,32 @@ export default function Hero() {
     >
       <div className="hero-content">
         <div className="hero-copy">
-          <div style={{ fontFamily: THEME.fontMono, fontSize: 13, color: THEME.green, marginBottom: 18 }}>
-            ● Available · {PERSON.location}
+          <div className="hero-status-card" aria-label={`Available in ${PERSON.location}`}>
+            <span className="hero-status-dot" />
+            <span>Available</span>
+            <span className="hero-status-divider" />
+            <MapPin size={14} />
+            <span>{PERSON.location}</span>
           </div>
-          <h1
-            style={{
-              fontFamily: THEME.fontDisplay,
-              fontSize: "clamp(40px,5.2vw,68px)",
-              fontWeight: 700,
-              lineHeight: 1.02,
-              color: THEME.heading,
-              margin: 0,
-              letterSpacing: -1.5,
-            }}
-          >
-            MD. Fahim
-            <br />
-            Shahriyar{" "}
-            <span
-              style={{
-                background: GRAD,
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                backgroundClip: "text",
-              }}
-            >
-              Pranto
-            </span>
-          </h1>
-          <p style={{ fontSize: 19, color: THEME.text, marginTop: 22, fontFamily: THEME.fontBody }}>
+          <div className="hero-intro-wrap">
+            <div className="hero-ai-logos" aria-hidden>
+              <AiLogoSlot />
+              <AiLogoSlot className="is-main" />
+            </div>
+            <h1 className="hero-title">
+              {greeting && (
+                <span className="hero-greeting">
+                  {typedGreeting}
+                  {!greetingDone && <span className="hero-caret hero-caret-small" aria-hidden />}
+                </span>
+              )}
+              <span className="hero-title-line">
+                <span className="hero-typed">{renderTypedIntro(typedIntro)}</span>
+                {greeting !== null && <span className="hero-caret" aria-hidden />}
+              </span>
+            </h1>
+          </div>
+          <p style={{ fontSize: 19, color: THEME.text, marginTop: 10, fontFamily: THEME.fontBody }}>
             {PERSON.role} <span style={{ color: THEME.muted }}>@</span>{" "}
             <a href={PERSON.companyUrl} target="_blank" rel="noreferrer" style={{ color: THEME.cyan, textDecoration: "none" }}>
               Octopi Digital
