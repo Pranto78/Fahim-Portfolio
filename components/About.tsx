@@ -23,6 +23,7 @@ import { Section, Eyebrow, Heading } from "./ui";
 import SnakeBorder from "./SnakeBorder";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
+const ABOUT_PHOTO_SRC = "https://i.ibb.co.com/qLmVVk8h/about12.png";
 
 const HOBBY_META: Record<string, { icon: ReactNode; color: string }> = {
   "Traveling & exploring": { icon: <PlaneTakeoff size={15} />, color: THEME.cyan },
@@ -122,6 +123,17 @@ function HobbyChip({ label }: { label: string }) {
   );
 }
 
+function AboutPhotoFrame() {
+  return (
+    <div className="about-photo-frame">
+      <div className="about-photo-inner">
+        <img src={ABOUT_PHOTO_SRC} alt={PERSON.name} loading="lazy" />
+        <div className="about-photo-tag">{PERSON.name}</div>
+      </div>
+    </div>
+  );
+}
+
 function PersonalCard({ p }: { p: (typeof PERSONAL)[number] }) {
   const [hover, setHover] = useState(false);
   return (
@@ -131,34 +143,35 @@ function PersonalCard({ p }: { p: (typeof PERSONAL)[number] }) {
         onMouseLeave={() => setHover(false)}
         style={{
           position: "relative",
-          padding: 16,
-          borderRadius: 14,
+          minHeight: 104,
+          padding: 10,
+          borderRadius: 11,
           background: THEME.bgSoft,
           border: `1px solid ${THEME.border}`,
-          boxShadow: hover ? `0 0 30px ${THEME.violet}22` : "none",
-          transform: hover ? "translateY(-4px)" : "translateY(0)",
+          boxShadow: hover ? `0 0 24px ${THEME.violet}1F` : "none",
+          transform: hover ? "translateY(-3px)" : "translateY(0)",
           transition: "transform .45s cubic-bezier(0.16,1,0.3,1), box-shadow .45s ease",
         }}
       >
-        <SnakeBorder active={hover} radius={14} duration={1.5} />
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 10 }}>
-          <div style={{ fontFamily: THEME.fontDisplay, fontWeight: 600, color: THEME.heading, fontSize: 15 }}>
+        <SnakeBorder active={hover} radius={11} duration={1.5} />
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 8 }}>
+          <div style={{ fontFamily: THEME.fontDisplay, fontWeight: 600, color: THEME.heading, fontSize: 12.5, lineHeight: 1.25 }}>
             {p.name}
           </div>
-          <div style={{ display: "flex", gap: 8 }}>
+          <div style={{ display: "flex", gap: 6, flex: "0 0 auto" }}>
             {p.github && (
               <a href={p.github} target="_blank" rel="noreferrer" style={{ color: THEME.muted }}>
-                <Github size={17} />
+                <Github size={14} />
               </a>
             )}
             {p.live && (
               <a href={p.live} target="_blank" rel="noreferrer" style={{ color: THEME.cyan }}>
-                <ExternalLink size={17} />
+                <ExternalLink size={14} />
               </a>
             )}
           </div>
         </div>
-        <p style={{ fontSize: 13.5, color: THEME.muted, marginTop: 6, lineHeight: 1.55 }}>{p.desc}</p>
+        <p style={{ fontSize: 11.5, color: THEME.muted, marginTop: 5, lineHeight: 1.4 }}>{p.desc}</p>
       </div>
     </motion.div>
   );
@@ -207,17 +220,18 @@ export default function About() {
           initial="hidden"
           whileInView="show"
           viewport={{ once: false, amount: 0.25 }}
-          style={{ flex: "1 1 340px" }}
+          style={{ flex: "1 1 420px", minWidth: 0 }}
         >
-          <h3 style={{ fontFamily: THEME.fontDisplay, color: THEME.heading, fontSize: 18, marginBottom: 16 }}>
+          <AboutPhotoFrame />
+          <h3 style={{ fontFamily: THEME.fontDisplay, color: THEME.heading, fontSize: 18, marginBottom: 14 }}>
             Personal Projects
           </h3>
           <motion.div
+            className="about-project-grid"
             variants={listStagger}
             initial="hidden"
             whileInView="show"
             viewport={{ once: false, amount: 0.2 }}
-            style={{ display: "flex", flexDirection: "column", gap: 12 }}
           >
             {PERSONAL.map((p) => (
               <PersonalCard key={p.name} p={p} />

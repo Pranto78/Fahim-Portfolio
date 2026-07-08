@@ -209,7 +209,10 @@ export default function Hero() {
         </div>
 
         <div className="hero-visual">
-          <OrbitalPortal photoAlt={PERSON.name} />
+          <OrbitalPortal
+            photoSrc="https://i.ibb.co.com/KMXvcL1/Chat-GPT-Image-Jul-8-2026-03-57-06-PM.png"
+            photoAlt={PERSON.name}
+          />
         </div>
       </div>
     </Section>
