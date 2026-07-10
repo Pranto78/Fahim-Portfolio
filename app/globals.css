@@ -396,9 +396,9 @@ a {
 }
 
 .hero-visual {
-  flex: 0 0 clamp(460px, 42vw, 690px);
-  width: clamp(460px, 42vw, 690px);
-  min-width: 420px;
+  flex: 0 0 clamp(520px, 45vw, 800px);
+  width: clamp(520px, 45vw, 800px);
+  min-width: 500px;
   display: grid;
   place-items: center;
   position: relative;

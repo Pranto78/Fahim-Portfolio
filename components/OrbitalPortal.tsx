@@ -430,7 +430,7 @@ export default function OrbitalPortal({
         .orbital-portal {
           --portal-bg-x: 0px;
           --portal-bg-y: 0px;
-          width: clamp(440px, 42vw, 690px);
+          width: clamp(520px, 46vw, 790px);
           max-width: 94vw;
           aspect-ratio: ${STAGE_W} / ${STAGE_H};
           position: relative;
@@ -497,17 +497,17 @@ export default function OrbitalPortal({
         .portal-card {
           position: absolute;
           z-index: 5;
-          left: 300px;
-          top: 160px;
-          width: 300px;
-          height: 400px;
-          border-radius: 30px;
+          left: 255px;
+          top: 130px;
+          width: 390px;
+          height: 460px;
+          border-radius: 34px;
         }
 
         .portal-card-frame {
           position: absolute;
           inset: 0;
-          border-radius: 30px;
+          border-radius: 34px;
           padding: 2px;
           background: linear-gradient(150deg, ${THEME.cyan}, #4b7bf0 40%, ${THEME.violet} 70%, #a855f7);
           -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
@@ -518,7 +518,7 @@ export default function OrbitalPortal({
         .portal-card-inner {
           position: absolute;
           inset: 2px;
-          border-radius: 28px;
+          border-radius: 32px;
           overflow: hidden;
           display: grid;
           place-items: center;
