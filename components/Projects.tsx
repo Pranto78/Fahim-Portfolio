@@ -125,9 +125,18 @@ function ProjectCard({ p }: { p: Project }) {
       <div style={{ fontSize: 12, color: THEME.cyan, fontFamily: THEME.fontMono, marginBottom: 8 }}>{p.tag}</div>
       <div style={{ fontFamily: THEME.fontDisplay, fontWeight: 700, color: THEME.heading, fontSize: 18 }}>{p.name}</div>
       <p style={{ fontSize: 13.5, color: THEME.muted, marginTop: 10, lineHeight: 1.6 }}>{p.blurb}</p>
-      <div style={{ marginTop: 14, fontSize: 12.5, color: THEME.text, display: "flex", alignItems: "center", gap: 6 }}>
-        <ArrowUpRight size={15} style={{ color: THEME.violet }} /> {p.role.split(".")[0]}.
-      </div>
+      <ul style={{ listStyle: "none", margin: "14px 0 0", padding: 0, display: "flex", flexDirection: "column", gap: 8 }}>
+        {p.highlights.map((h) => (
+          <li key={h} style={{ display: "flex", alignItems: "flex-start", gap: 7, fontSize: 12.5, color: THEME.text, lineHeight: 1.5 }}>
+            <ArrowUpRight
+              size={14}
+              aria-hidden
+              style={{ color: THEME.violet, flex: "0 0 auto", marginTop: 2, opacity: hover ? 1 : 0.75, transition: "opacity .3s ease" }}
+            />
+            <span>{h}</span>
+          </li>
+        ))}
+      </ul>
       <ProjectStackLogos stack={p.visualStack} active={hover} />
     </div>
   );
