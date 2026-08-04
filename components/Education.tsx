@@ -3,6 +3,10 @@ import { GraduationCap } from "lucide-react";
 import { THEME, GRAD } from "@/config/theme.config";
 import { Section, Eyebrow, Heading } from "./ui";
 
+// Only higher education / professional learning is shown on the timeline.
+// School-level background (HSC, SSC, JSC, PSC) is deliberately NOT listed here —
+// it still lives in PERSON.schooling (data/person.ts) so the AI assistant can
+// answer if a visitor asks about his school, college or elementary education.
 const items = [
   {
     t: "BSc in Computer Science & Engineering",
@@ -15,24 +19,6 @@ const items = [
     s: "Programming Hero",
     d: "Jun 2025 – Feb 2026",
     note: "Full-stack: HTML, CSS, JS, React, Node, MongoDB. 10+ projects.",
-  },
-  {
-    t: "College — HSC",
-    s: "Rajshahi Govt. Shikkha Board Model School & College",
-    d: "Higher Secondary",
-    note: "Science group.",
-  },
-  {
-    t: "High School — SSC & JSC",
-    s: "Rajshahi Govt. Shikkha Board Model School & College",
-    d: "Secondary",
-    note: "Science group (SSC) · JSC.",
-  },
-  {
-    t: "Elementary — PSC",
-    s: "Civil Aviation School, Rajshahi",
-    d: "Primary",
-    note: "Operated under the Rajshahi Airport (Civil Aviation) authorities.",
   },
 ];
 

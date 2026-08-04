@@ -4,6 +4,7 @@ import { THEME } from "@/config/theme.config";
 import { NAV } from "@/data/skills";
 import Loader from "@/components/Loader";
 import Navbar from "@/components/Navbar";
+import ScrollProgress from "@/components/ScrollProgress";
 import Hero from "@/components/Hero";
 import About from "@/components/About";
 import Skills from "@/components/Skills";
@@ -48,6 +49,7 @@ export default function Page() {
       {loading && <Loader onDone={() => setLoading(false)} />}
       {!loading && (
         <div style={{ position: "relative", zIndex: 1 }}>
+          <ScrollProgress />
           <Navbar active={active} />
           <Hero />
           <About />

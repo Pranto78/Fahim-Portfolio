@@ -15,8 +15,8 @@ export const PERSON = {
   phone: "+880-1916-836881",
   linkedin: "https://www.linkedin.com/in/md-fahim-shahriyar-pranto/",
   github: "https://github.com/Pranto78",
-  instagram: "#", // TODO: add real Instagram URL
-  facebook: "#", // TODO: add real Facebook URL
+  instagram: "https://www.instagram.com/_ruthless_youngster_?igsh=MTNvN2d4M3VkMWNvdg==&utm_source=ig_contact_invite", // TODO: add real Instagram URL
+  facebook: "https://www.facebook.com/share/18cAsPq78v/", // TODO: add real Facebook URL
   cv: "#", // TODO: add CV link (e.g. Google Drive share link)
   oldPortfolio: "https://fahim-pranto.netlify.app/",
   education:
