@@ -15,14 +15,14 @@ export const PERSON = {
   phone: "+880-1916-836881",
   linkedin: "https://www.linkedin.com/in/md-fahim-shahriyar-pranto/",
   github: "https://github.com/Pranto78",
-  instagram: "https://www.instagram.com/_ruthless_youngster_?igsh=MTNvN2d4M3VkMWNvdg==&utm_source=ig_contact_invite", // TODO: add real Instagram URL
+  instagram:
+    "https://www.instagram.com/_ruthless_youngster_?igsh=MTNvN2d4M3VkMWNvdg==&utm_source=ig_contact_invite", // TODO: add real Instagram URL
   facebook: "https://www.facebook.com/share/18cAsPq78v/", // TODO: add real Facebook URL
-  cv: "#", // TODO: add CV link (e.g. Google Drive share link)
+  cv: "https://drive.google.com/file/d/16J_MaJH2R-EuEFYNc8kIfz2WB6dXT0xz/view?usp=drive_link", // TODO: add CV link (e.g. Google Drive share link)
   oldPortfolio: "https://fahim-pranto.netlify.app/",
   education:
     "Bachelor of Science in Computer Science & Engineering (BSc in CSE), American International University-Bangladesh (AIUB), Dhaka. Expected graduation 2026. Coursework: Data Structures & Algorithms, DBMS, OOP, Web Engineering, Software Engineering.",
-  cert:
-    "Complete Web Development Course — Programming Hero (Jun 2025 – Feb 2026). Full-stack: HTML, CSS, JS, React, Node, MongoDB. 10+ projects built.",
+  cert: "Complete Web Development Course — Programming Hero (Jun 2025 – Feb 2026). Full-stack: HTML, CSS, JS, React, Node, MongoDB. 10+ projects built.",
   languages: "English (Professional Working Proficiency), Bangla (Native).",
   // Structured schooling. Results are gated: the AI reveals a GPA ONLY when
   // explicitly asked for the result, and then only the number.
@@ -51,9 +51,20 @@ export const PERSON = {
   personality:
     "Enjoys learning about new places, experiencing different cultures and creating memorable travel experiences; prefers destinations with breathtaking landscapes and calm surroundings.",
   bucketList: [
-    "Nepal", "New Zealand", "Iceland", "Spain", "Switzerland", "The Maldives", "Bora Bora",
-    "Bali", "Santorini (Greece)", "The Faroe Islands", "The Lofoten Islands (Norway)",
-    "The Azores (Portugal)", "Fiji", "Seychelles",
+    "Nepal",
+    "New Zealand",
+    "Iceland",
+    "Spain",
+    "Switzerland",
+    "The Maldives",
+    "Bora Bora",
+    "Bali",
+    "Santorini (Greece)",
+    "The Faroe Islands",
+    "The Lofoten Islands (Norway)",
+    "The Azores (Portugal)",
+    "Fiji",
+    "Seychelles",
   ],
   // Edit these anytime:
   hobbies: [
