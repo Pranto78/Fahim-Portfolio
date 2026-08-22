@@ -1,6 +1,7 @@
 "use client";
 import { ReactNode, useState } from "react";
 import { motion, Variants, useReducedMotion } from "framer-motion";
+import Image from "next/image";
 import {
   Github,
   ExternalLink,
@@ -21,9 +22,11 @@ import { THEME } from "@/config/theme.config";
 import { PERSON, PERSONAL } from "@/data/person";
 import { Section, Eyebrow, Heading } from "./ui";
 import SnakeBorder from "./SnakeBorder";
+import ABOUT_PHOTO_SRC from "@/asset/fsp4.jpg";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
-const ABOUT_PHOTO_SRC = "https://i.ibb.co.com/qLmVVk8h/about12.png";
+const picture = ABOUT_PHOTO_SRC;
+// const ABOUT_PHOTO_SRC = "https://i.ibb.co.com/qLmVVk8h/about12.png";
 
 const HOBBY_META: Record<string, { icon: ReactNode; color: string }> = {
   "Traveling & exploring": { icon: <PlaneTakeoff size={15} />, color: THEME.cyan },
@@ -127,7 +130,7 @@ function AboutPhotoFrame() {
   return (
     <div className="about-photo-frame">
       <div className="about-photo-inner">
-        <img src={ABOUT_PHOTO_SRC} alt={PERSON.name} loading="lazy" />
+        <Image src={picture} alt={PERSON.name} loading="lazy" />
         <div className="about-photo-tag">{PERSON.name}</div>
       </div>
     </div>
