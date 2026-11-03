@@ -22,7 +22,7 @@ import { THEME } from "@/config/theme.config";
 import { PERSON, PERSONAL } from "@/data/person";
 import { Section, Eyebrow, Heading } from "./ui";
 import SnakeBorder from "./SnakeBorder";
-import ABOUT_PHOTO_SRC from "@/asset/fsp4.jpg";
+import ABOUT_PHOTO_SRC from "@/asset/pranto2.png";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 const picture = ABOUT_PHOTO_SRC;

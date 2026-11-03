@@ -10,6 +10,7 @@ import { useTypewriterCycle } from "@/lib/useTypewriter";
 import { Section } from "./ui";
 import SocialRail from "./SocialRail";
 import OrbitalPortal from "./OrbitalPortal";
+import picture1 from "@/asset/pranto.png";
 
 const GREETING_INTRO_PHRASES = ["Hello, I'm Fahim", "Nice to meet you", "Welcome to my web"];
 const DIRECT_INTRO_PHRASES = ["I'm Fahim", "Nice to meet you", "Welcome to my web"];
@@ -210,7 +211,7 @@ export default function Hero() {
 
         <div className="hero-visual">
           <OrbitalPortal
-            photoSrc="https://i.ibb.co.com/KMXvcL1/Chat-GPT-Image-Jul-8-2026-03-57-06-PM.png"
+            photoSrc={picture1.src}
             photoAlt={PERSON.name}
           />
         </div>
