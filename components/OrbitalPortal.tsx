@@ -432,7 +432,6 @@ export default function OrbitalPortal({
         </svg>
 
         <div className="portal-card">
-          <div className="portal-card-frame" />
           <div className="portal-card-inner">
             <div className="portal-card-grid" aria-hidden />
             {photoSrc ? (
@@ -452,10 +451,6 @@ export default function OrbitalPortal({
               <div className="portal-placeholder">your photo here</div>
             )}
             <div className="portal-card-sheen" aria-hidden />
-            <span className="portal-corner portal-corner-tl" />
-            <span className="portal-corner portal-corner-tr" />
-            <span className="portal-corner portal-corner-bl" />
-            <span className="portal-corner portal-corner-br" />
           </div>
         </div>
 
@@ -612,6 +607,7 @@ export default function OrbitalPortal({
         }
 
         /* ---------- Photo card (laid out at real pixels — no scaled bitmap) ---------- */
+        /* No border: every edge is feathered with a mask so the photo dissolves into space. */
         .portal-card {
           position: absolute;
           z-index: 5;
@@ -619,33 +615,23 @@ export default function OrbitalPortal({
           top: ${pct(CARD_Y, STAGE_H)};
           width: ${pct(CARD_W, STAGE_W)};
           height: ${pct(CARD_H, STAGE_H)};
-          border-radius: calc(var(--s) * 34px);
-          box-shadow:
-            0 calc(var(--s) * 30px) calc(var(--s) * 80px) rgba(0, 0, 0, 0.5),
-            0 0 calc(var(--s) * 46px) rgba(70, 140, 255, 0.18);
-        }
-
-        .portal-card-frame {
-          position: absolute;
-          inset: 0;
-          border-radius: inherit;
-          padding: 2px;
-          background: linear-gradient(150deg, ${THEME.cyan}, #4b7bf0 40%, ${THEME.violet} 70%, #a855f7);
-          -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-          -webkit-mask-composite: xor;
-          mask-composite: exclude;
+          -webkit-mask-image:
+            linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.55) 7%, #000 18%, #000 82%, rgba(0, 0, 0, 0.55) 93%, transparent 100%),
+            linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.6) 6%, #000 15%, #000 76%, rgba(0, 0, 0, 0.5) 90%, transparent 100%);
+          -webkit-mask-composite: source-in;
+          mask-image:
+            linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.55) 7%, #000 18%, #000 82%, rgba(0, 0, 0, 0.55) 93%, transparent 100%),
+            linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.6) 6%, #000 15%, #000 76%, rgba(0, 0, 0, 0.5) 90%, transparent 100%);
+          mask-composite: intersect;
         }
 
         .portal-card-inner {
           position: absolute;
-          inset: 2px;
-          border-radius: calc(var(--s) * 34px - 2px);
+          inset: 0;
           overflow: hidden;
           display: grid;
           place-items: center;
-          background:
-            radial-gradient(120% 90% at 50% 18%, #171e3e 0%, #0b1022 55%, #080b18 100%),
-            ${THEME.bgSoft};
+          background: radial-gradient(120% 90% at 50% 18%, #141b38 0%, #0b1022 55%, #080b18 100%);
         }
 
         .portal-card-grid {
@@ -672,10 +658,8 @@ export default function OrbitalPortal({
           inset: 0;
           z-index: 3;
           pointer-events: none;
-          background:
-            linear-gradient(180deg, rgba(255, 255, 255, 0.06), transparent 22%),
-            linear-gradient(0deg, rgba(6, 8, 20, 0.35), transparent 26%);
-          box-shadow: inset 0 0 calc(var(--s) * 60px) rgba(80, 120, 255, 0.12);
+          /* Soft vignette so the photo's blue backdrop melts into the dark scene. */
+          background: radial-gradient(85% 75% at 50% 42%, transparent 55%, rgba(6, 9, 20, 0.55) 100%);
         }
 
         .portal-placeholder {
@@ -688,47 +672,6 @@ export default function OrbitalPortal({
           text-indent: 0.42em;
           text-shadow: 0 0 18px rgba(90, 140, 255, 0.35);
           white-space: nowrap;
-        }
-
-        .portal-corner {
-          position: absolute;
-          width: calc(var(--s) * 20px);
-          height: calc(var(--s) * 20px);
-          border: 2px solid rgba(120, 180, 255, 0.6);
-          z-index: 4;
-          pointer-events: none;
-        }
-
-        .portal-corner-tl {
-          top: calc(var(--s) * 14px);
-          left: calc(var(--s) * 14px);
-          border-right: 0;
-          border-bottom: 0;
-          border-radius: 6px 0 0;
-        }
-
-        .portal-corner-tr {
-          top: calc(var(--s) * 14px);
-          right: calc(var(--s) * 14px);
-          border-left: 0;
-          border-bottom: 0;
-          border-radius: 0 6px 0 0;
-        }
-
-        .portal-corner-bl {
-          bottom: calc(var(--s) * 14px);
-          left: calc(var(--s) * 14px);
-          border-right: 0;
-          border-top: 0;
-          border-radius: 0 0 0 6px;
-        }
-
-        .portal-corner-br {
-          right: calc(var(--s) * 14px);
-          bottom: calc(var(--s) * 14px);
-          border-left: 0;
-          border-top: 0;
-          border-radius: 0 0 6px;
         }
 
         /* ---------- Planets ---------- */
