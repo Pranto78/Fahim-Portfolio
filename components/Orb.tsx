@@ -12,7 +12,7 @@ export function Orb({ size = 120 }: { size?: number }) {
           background: GRAD,
           filter: "blur(2px)",
           animation: "spin 8s linear infinite",
-          boxShadow: `0 0 60px ${THEME.cyan}55, 0 0 90px ${THEME.violet}44`,
+          boxShadow: `0 6px 24px ${THEME.navy}aa`,
         }}
       />
       <div
@@ -21,7 +21,7 @@ export function Orb({ size = 120 }: { size?: number }) {
           inset: size * 0.18,
           borderRadius: "50%",
           background: THEME.bg,
-          boxShadow: `inset 0 0 30px ${THEME.violet}66`,
+          boxShadow: `inset 0 0 24px ${THEME.deep}aa`,
         }}
       />
       <div

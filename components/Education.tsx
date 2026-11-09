@@ -40,10 +40,10 @@ export default function Education() {
                 height: 12,
                 borderRadius: "50%",
                 background: GRAD,
-                boxShadow: `0 0 12px ${THEME.cyan}88`,
+                boxShadow: `0 0 0 3px ${THEME.bg}, 0 0 0 4px ${THEME.steel}55`,
               }}
             />
-            <div style={{ fontFamily: THEME.fontMono, fontSize: 12, color: THEME.cyan }}>{it.d}</div>
+            <div style={{ fontFamily: THEME.fontMono, fontSize: 12, color: THEME.ice }}>{it.d}</div>
             <div style={{ fontFamily: THEME.fontDisplay, fontWeight: 600, color: THEME.heading, fontSize: 17, marginTop: 4 }}>
               {it.t}
             </div>

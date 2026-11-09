@@ -10,10 +10,135 @@
   --green: #39ff88;
   --text: #e8eaed;
   --muted: #7b8794;
+
+  /* Button palette — matte ocean blues */
+  --btn-navy: #0a1931;
+  --btn-deep: #1a3d63;
+  --btn-steel: #4a7fa7;
+  --btn-ice: #b3cfe5;
+  --btn-snow: #f6fafd;
+  --btn-ease: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 * {
   box-sizing: border-box;
+}
+
+/* =========================================================================
+   Buttons — matte finish: flat tonal gradients, soft dark depth, no glow.
+   ========================================================================= */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  font-family: "Inter", sans-serif;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    background-position 0.45s var(--btn-ease),
+    background-color 0.3s var(--btn-ease),
+    border-color 0.3s var(--btn-ease),
+    color 0.3s var(--btn-ease),
+    box-shadow 0.3s var(--btn-ease),
+    transform 0.3s var(--btn-ease);
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--btn-ice);
+  outline-offset: 2px;
+}
+
+.btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+  transform: none;
+}
+
+/* Primary — steel → deep blue, snow text */
+.btn-primary {
+  color: var(--btn-snow);
+  border: 1px solid rgba(179, 207, 229, 0.14);
+  background-image: linear-gradient(135deg, var(--btn-steel) 0%, #2f5f88 45%, var(--btn-deep) 100%);
+  background-size: 180% 180%;
+  background-position: 0% 0%;
+  box-shadow:
+    inset 0 1px 0 rgba(246, 250, 253, 0.1),
+    0 2px 6px rgba(10, 25, 49, 0.45);
+}
+
+.btn-primary:hover:not(:disabled) {
+  background-position: 100% 100%;
+  border-color: rgba(179, 207, 229, 0.26);
+  transform: translateY(-1px);
+  box-shadow:
+    inset 0 1px 0 rgba(246, 250, 253, 0.12),
+    0 6px 14px rgba(10, 25, 49, 0.55);
+}
+
+.btn-primary:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow:
+    inset 0 1px 0 rgba(246, 250, 253, 0.06),
+    0 1px 3px rgba(10, 25, 49, 0.5);
+}
+
+/* Secondary — quiet navy surface, ice text */
+.btn-secondary {
+  color: var(--btn-ice);
+  background-color: rgba(26, 61, 99, 0.22);
+  border: 1px solid rgba(179, 207, 229, 0.2);
+}
+
+.btn-secondary:hover:not(:disabled) {
+  color: var(--btn-snow);
+  background-color: rgba(26, 61, 99, 0.55);
+  border-color: rgba(179, 207, 229, 0.38);
+  transform: translateY(-1px);
+}
+
+/* Chip — small tonal pill for suggestions / AI actions */
+.btn-chip {
+  color: var(--btn-ice);
+  background-color: rgba(74, 127, 167, 0.12);
+  border: 1px solid rgba(74, 127, 167, 0.38);
+}
+
+.btn-chip:hover:not(:disabled) {
+  color: var(--btn-snow);
+  background-color: rgba(74, 127, 167, 0.26);
+  border-color: rgba(179, 207, 229, 0.4);
+}
+
+/* Inline accent link (e.g. company name) — ice text, steel underline slides in on hover */
+.accent-link {
+  color: var(--btn-ice);
+  text-decoration: none;
+  background-image: linear-gradient(90deg, var(--btn-ice), var(--btn-steel));
+  background-size: 0% 1.5px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  padding-bottom: 1px;
+  transition: color 0.3s var(--btn-ease), background-size 0.4s var(--btn-ease);
+}
+
+.accent-link:hover,
+.accent-link:focus-visible {
+  color: var(--btn-snow);
+  background-size: 100% 1.5px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .accent-link {
+    transition: none;
+  }
+  .btn {
+    transition: none;
+  }
+  .btn:hover {
+    transform: none !important;
+  }
 }
 
 html,
@@ -361,7 +486,7 @@ a {
 }
 
 .hero-typed-gradient {
-  background: linear-gradient(135deg, var(--cyan), var(--violet));
+  background: linear-gradient(135deg, var(--btn-ice) 0%, #7fa8c9 50%, var(--btn-steel) 100%);
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -373,9 +498,8 @@ a {
   height: 0.74em;
   margin-left: 0.1em;
   border-radius: 999px;
-  background: var(--cyan);
+  background: var(--btn-ice);
   vertical-align: -0.045em;
-  box-shadow: 0 0 14px rgba(0, 240, 255, 0.3);
   animation: caret 1.35s ease-in-out infinite;
 }
 
@@ -544,24 +668,23 @@ a {
   font-family: "Inter", sans-serif;
 }
 
-.contact-ai-button {
-  padding: 6px 10px;
-  border-radius: 9px;
-  color: #d6a8ff;
-  background: rgba(177, 78, 255, 0.08);
-  border: 1px solid rgba(177, 78, 255, 0.35);
-  font-size: 12px;
-  font-weight: 600;
-}
-
+.contact-ai-button,
 .contact-generate-button {
   padding: 6px 10px;
   border-radius: 9px;
-  color: #72e8ff;
-  background: rgba(0, 240, 255, 0.07);
-  border: 1px solid rgba(0, 240, 255, 0.28);
+  color: var(--btn-ice);
+  background-color: rgba(74, 127, 167, 0.12);
+  border: 1px solid rgba(74, 127, 167, 0.38);
   font-size: 12px;
   font-weight: 600;
+  transition: background-color 0.3s var(--btn-ease), border-color 0.3s var(--btn-ease), color 0.3s var(--btn-ease);
+}
+
+.contact-ai-button:hover:not(:disabled),
+.contact-generate-button:hover:not(:disabled) {
+  color: var(--btn-snow);
+  background-color: rgba(74, 127, 167, 0.26);
+  border-color: rgba(179, 207, 229, 0.4);
 }
 
 .contact-undo-button {
@@ -569,17 +692,36 @@ a {
   background: transparent;
   color: var(--muted);
   font-size: 12px;
+  transition: color 0.3s var(--btn-ease);
+}
+
+.contact-undo-button:hover {
+  color: var(--btn-ice);
 }
 
 .contact-submit-button {
   min-height: 38px;
   padding: 8px 16px;
   border-radius: 11px;
-  color: #071014;
-  background: linear-gradient(135deg, var(--cyan), #7c69ff);
-  box-shadow: 0 8px 24px rgba(0, 240, 255, 0.14);
+  color: var(--btn-snow);
+  border: 1px solid rgba(179, 207, 229, 0.14);
+  background-image: linear-gradient(135deg, var(--btn-steel) 0%, #2f5f88 45%, var(--btn-deep) 100%);
+  background-size: 180% 180%;
+  background-position: 0% 0%;
+  box-shadow:
+    inset 0 1px 0 rgba(246, 250, 253, 0.1),
+    0 2px 6px rgba(10, 25, 49, 0.45);
   font-size: 13px;
   font-weight: 700;
+  transition: background-position 0.45s var(--btn-ease), box-shadow 0.3s var(--btn-ease), border-color 0.3s var(--btn-ease);
+}
+
+.contact-submit-button:hover:not(:disabled) {
+  background-position: 100% 100%;
+  border-color: rgba(179, 207, 229, 0.26);
+  box-shadow:
+    inset 0 1px 0 rgba(246, 250, 253, 0.12),
+    0 6px 14px rgba(10, 25, 49, 0.55);
 }
 
 .contact-ai-button:disabled,
@@ -643,9 +785,10 @@ a {
   padding: 0;
   border-radius: 10px;
   cursor: pointer;
-  color: var(--muted);
-  background: #10141c;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--btn-ice);
+  background-color: rgba(26, 61, 99, 0.22);
+  border: 1px solid rgba(179, 207, 229, 0.2);
+  transition: background-color 0.3s var(--btn-ease), color 0.3s var(--btn-ease), border-color 0.3s var(--btn-ease);
 }
 
 .contact-modal-copy {
@@ -704,10 +847,16 @@ a {
   padding: 5px 9px;
   border-radius: 8px;
   cursor: pointer;
-  color: #72e8ff;
-  background: rgba(0, 240, 255, 0.08);
-  border: 1px solid rgba(0, 240, 255, 0.22);
+  color: var(--btn-ice);
+  background-color: rgba(74, 127, 167, 0.12);
+  border: 1px solid rgba(74, 127, 167, 0.38);
   font: 600 11.5px "Inter", sans-serif;
+  transition: background-color 0.3s var(--btn-ease), color 0.3s var(--btn-ease);
+}
+
+.contact-suggestion button:hover:not(:disabled) {
+  color: var(--btn-snow);
+  background-color: rgba(74, 127, 167, 0.26);
 }
 
 .contact-suggestion button:disabled {
@@ -750,10 +899,18 @@ a {
   padding: 8px 14px;
   border-radius: 10px;
   cursor: pointer;
-  color: var(--muted);
-  background: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.09);
+  color: var(--btn-ice);
+  background-color: rgba(26, 61, 99, 0.22);
+  border: 1px solid rgba(179, 207, 229, 0.2);
   font-size: 12.5px;
+  transition: background-color 0.3s var(--btn-ease), color 0.3s var(--btn-ease), border-color 0.3s var(--btn-ease);
+}
+
+.contact-modal-cancel:hover:not(:disabled),
+.contact-modal-close:hover:not(:disabled) {
+  color: var(--btn-snow);
+  background-color: rgba(26, 61, 99, 0.55);
+  border-color: rgba(179, 207, 229, 0.38);
 }
 
 .contact-modal-generate {

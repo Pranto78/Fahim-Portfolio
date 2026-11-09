@@ -93,19 +93,7 @@ export function Eyebrow({ icon: Icon, children }: { icon: LucideIcon; children: 
           animation: reduced ? undefined : "badgeFloat 3.6s ease-in-out infinite",
         }}
       >
-        {/* breathing glow */}
-        <div
-          aria-hidden
-          style={{
-            position: "absolute",
-            inset: -3,
-            borderRadius: 12,
-            background: GRAD,
-            filter: "blur(8px)",
-            opacity: 0.5,
-            animation: reduced ? undefined : "iconGlow 3.2s ease-in-out infinite",
-          }}
-        />
+        {/* matte icon chip — tonal fill, no glow */}
         <div
           style={{
             position: "relative",
@@ -114,11 +102,12 @@ export function Eyebrow({ icon: Icon, children }: { icon: LucideIcon; children: 
             borderRadius: 10,
             display: "grid",
             placeItems: "center",
-            background: THEME.bgSoft,
-            border: `1px solid ${THEME.cyan}55`,
+            background: `linear-gradient(135deg, ${THEME.deep}66, ${THEME.navy}cc)`,
+            border: `1px solid ${THEME.steel}66`,
+            boxShadow: `inset 0 1px 0 ${THEME.snow}14, 0 2px 6px ${THEME.navy}88`,
           }}
         >
-          <Icon size={17} color={THEME.cyan} />
+          <Icon size={17} color={THEME.ice} />
         </div>
       </div>
 
@@ -129,7 +118,7 @@ export function Eyebrow({ icon: Icon, children }: { icon: LucideIcon; children: 
           fontSize: 13,
           letterSpacing: 3,
           textTransform: "uppercase",
-          background: `linear-gradient(90deg, ${THEME.cyan}, ${THEME.violet})`,
+          background: GRAD,
           WebkitBackgroundClip: "text",
           backgroundClip: "text",
           WebkitTextFillColor: "transparent",

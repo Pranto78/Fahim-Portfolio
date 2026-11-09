@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
 import { Send } from "lucide-react";
-import { THEME, GRAD } from "@/config/theme.config";
+import { THEME, GRAD_FILL } from "@/config/theme.config";
 import { askAI } from "@/lib/askAI";
 import { TypingDots } from "./Orb";
 
@@ -74,8 +74,8 @@ export default function ChatPanel({
                 borderRadius: 14,
                 fontSize: 14,
                 lineHeight: 1.5,
-                background: m.role === "user" ? GRAD : THEME.bgSoft,
-                color: m.role === "user" ? "#06080C" : THEME.text,
+                background: m.role === "user" ? GRAD_FILL : THEME.bgSoft,
+                color: m.role === "user" ? THEME.snow : THEME.text,
                 border: m.role === "user" ? "none" : `1px solid ${THEME.border}`,
                 fontWeight: m.role === "user" ? 600 : 400,
               }}
@@ -99,16 +99,8 @@ export default function ChatPanel({
             <button
               key={s.label}
               onClick={() => send(s.q)}
-              style={{
-                fontSize: 12,
-                padding: "6px 12px",
-                borderRadius: 20,
-                cursor: "pointer",
-                background: "transparent",
-                color: THEME.cyan,
-                border: `1px solid ${THEME.cyan}55`,
-                fontFamily: THEME.fontMono,
-              }}
+              className="btn btn-chip"
+              style={{ fontSize: 12, padding: "6px 12px", borderRadius: 20, fontFamily: THEME.fontMono }}
             >
               {s.label}
             </button>
@@ -138,16 +130,9 @@ export default function ChatPanel({
         <button
           onClick={() => send()}
           disabled={loading}
-          style={{
-            width: 44,
-            borderRadius: 12,
-            border: "none",
-            cursor: "pointer",
-            background: GRAD,
-            color: "#06080C",
-            display: "grid",
-            placeItems: "center",
-          }}
+          aria-label="Send message"
+          className="btn btn-primary"
+          style={{ width: 44, borderRadius: 12, padding: 0 }}
         >
           <Send size={18} />
         </button>

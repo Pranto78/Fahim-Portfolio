@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { FileText, MapPin } from "lucide-react";
 import { BsOpenai } from "react-icons/bs";
 import { SiClaude, SiGooglegemini, SiPerplexity } from "react-icons/si";
-import { THEME, GRAD } from "@/config/theme.config";
+import { THEME } from "@/config/theme.config";
 import { PERSON } from "@/data/person";
 import { scrollToSection } from "@/lib/scrollToSection";
 import { useTypewriterCycle } from "@/lib/useTypewriter";
@@ -156,7 +156,7 @@ export default function Hero() {
           </div>
           <p style={{ fontSize: 19, color: THEME.text, marginTop: 10, fontFamily: THEME.fontBody }}>
             {PERSON.role} <span style={{ color: THEME.muted }}>@</span>{" "}
-            <a href={PERSON.companyUrl} target="_blank" rel="noreferrer" style={{ color: THEME.cyan, textDecoration: "none" }}>
+            <a href={PERSON.companyUrl} target="_blank" rel="noreferrer" className="accent-link">
               Octopi Digital
             </a>
           </p>
@@ -166,39 +166,18 @@ export default function Hero() {
           </p>
           <div style={{ display: "flex", gap: 12, marginTop: 30, flexWrap: "wrap" }}>
             <button
+              className="btn btn-primary"
               onClick={() => scrollToSection("projects")}
-              style={{
-                padding: "13px 24px",
-                borderRadius: 12,
-                border: "none",
-                cursor: "pointer",
-                background: GRAD,
-                color: "#06080C",
-                fontWeight: 600,
-                fontSize: 15,
-                fontFamily: THEME.fontBody,
-              }}
+              style={{ padding: "13px 24px", borderRadius: 12, fontWeight: 600, fontSize: 15 }}
             >
               View Projects
             </button>
             <a
+              className="btn btn-secondary"
               href={PERSON.cv}
               target="_blank"
               rel="noreferrer"
-              style={{
-                padding: "13px 24px",
-                borderRadius: 12,
-                cursor: "pointer",
-                textDecoration: "none",
-                background: "transparent",
-                color: THEME.text,
-                fontWeight: 600,
-                fontSize: 15,
-                border: `1px solid ${THEME.border}`,
-                display: "flex",
-                alignItems: "center",
-                gap: 8,
-              }}
+              style={{ padding: "13px 24px", borderRadius: 12, fontWeight: 600, fontSize: 15 }}
             >
               <FileText size={18} /> View CV
             </a>

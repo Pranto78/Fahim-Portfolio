@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { Sparkles, X } from "lucide-react";
-import { THEME, GRAD } from "@/config/theme.config";
+import { THEME } from "@/config/theme.config";
 import { useTypewriterCycle } from "@/lib/useTypewriter";
 import { Orb } from "./Orb";
 import ChatPanel from "./ChatPanel";
@@ -67,7 +67,8 @@ export default function FloatingBot() {
 
       <button
         onClick={() => setOpen((o) => !o)}
-        aria-label="Open chat"
+        aria-label={open ? "Close chat" : "Open chat"}
+        className="btn btn-primary"
         style={{
           position: "fixed",
           bottom: 24,
@@ -75,16 +76,11 @@ export default function FloatingBot() {
           zIndex: 61,
           width: 58,
           height: 58,
+          padding: 0,
           borderRadius: "50%",
-          border: "none",
-          cursor: "pointer",
-          background: GRAD,
-          display: "grid",
-          placeItems: "center",
-          boxShadow: `0 0 30px ${THEME.cyan}55`,
         }}
       >
-        {open ? <X size={24} color="#06080C" /> : <Sparkles size={24} color="#06080C" />}
+        {open ? <X size={24} /> : <Sparkles size={24} />}
       </button>
 
       {open && (

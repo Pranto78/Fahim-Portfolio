@@ -13,7 +13,7 @@ import {
   SiTypescript,
   SiVite,
 } from "react-icons/si";
-import { THEME, GRAD } from "@/config/theme.config";
+import { THEME } from "@/config/theme.config";
 import { PROJECTS, Project, ProjectTech } from "@/data/projects";
 import { Section, Eyebrow, Heading } from "./ui";
 import { Orb } from "./Orb";
@@ -213,22 +213,9 @@ export default function Projects() {
             ))}
           </div>
           <button
+            className="btn btn-primary"
             onClick={() => setExpanded(true)}
-            style={{
-              marginTop: 28,
-              padding: "13px 24px",
-              borderRadius: 12,
-              cursor: "pointer",
-              background: GRAD,
-              color: "#06080C",
-              fontWeight: 600,
-              fontSize: 15,
-              border: "none",
-              display: "inline-flex",
-              alignItems: "center",
-              gap: 8,
-              fontFamily: THEME.fontBody,
-            }}
+            style={{ marginTop: 28, padding: "13px 24px", borderRadius: 12, fontWeight: 600, fontSize: 15 }}
           >
             <Sparkles size={18} /> Want to know about a project? Ask the AI
           </button>
@@ -247,15 +234,8 @@ export default function Projects() {
                 setExpanded(false);
                 setSelected(null);
               }}
-              style={{
-                background: "none",
-                border: `1px solid ${THEME.border}`,
-                color: THEME.muted,
-                padding: "7px 14px",
-                borderRadius: 10,
-                cursor: "pointer",
-                fontSize: 13,
-              }}
+              className="btn btn-secondary"
+              style={{ padding: "7px 14px", borderRadius: 10, fontSize: 13 }}
             >
               Close
             </button>

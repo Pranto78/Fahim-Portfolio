@@ -168,7 +168,7 @@ function PersonalCard({ p }: { p: (typeof PERSONAL)[number] }) {
               </a>
             )}
             {p.live && (
-              <a href={p.live} target="_blank" rel="noreferrer" style={{ color: THEME.cyan }}>
+              <a href={p.live} target="_blank" rel="noreferrer" style={{ color: THEME.ice }}>
                 <ExternalLink size={14} />
               </a>
             )}
@@ -195,7 +195,7 @@ export default function About() {
         >
           <p style={{ fontSize: 16.5, color: THEME.text, lineHeight: 1.75 }}>
             My name is {PERSON.name}. I&apos;m a {PERSON.role} on the Technology Team at{" "}
-            <a href={PERSON.companyUrl} target="_blank" rel="noreferrer" style={{ color: THEME.cyan, textDecoration: "none" }}>
+            <a href={PERSON.companyUrl} target="_blank" rel="noreferrer" className="accent-link">
               Octopi Digital
             </a>
             , building production web and mobile apps. My day-to-day spans React/Next on the web,

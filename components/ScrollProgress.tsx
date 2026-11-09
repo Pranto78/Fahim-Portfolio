@@ -53,7 +53,6 @@ export default function ScrollProgress() {
           height: "100%",
           width: "100%",
           background: GRAD,
-          boxShadow: `0 0 12px ${THEME.cyan}88, 0 0 26px ${THEME.violet}55`,
         }}
       />
       {/* glowing head that rides the leading edge */}
@@ -67,8 +66,8 @@ export default function ScrollProgress() {
           width: 8,
           height: 8,
           borderRadius: "50%",
-          background: THEME.cyan,
-          boxShadow: `0 0 10px ${THEME.cyan}, 0 0 22px ${THEME.violet}`,
+          background: THEME.snow,
+          boxShadow: `0 0 0 2px ${THEME.steel}66`,
         }}
       />
     </motion.div>,

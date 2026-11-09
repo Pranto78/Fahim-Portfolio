@@ -122,8 +122,8 @@ export default function Navbar({ active }: { active: string }) {
               overflow: "hidden",
               borderRadius: 12,
               background: THEME.bgSoft,
-              border: `1px solid ${THEME.cyan}44`,
-              boxShadow: `0 0 20px ${THEME.cyan}18`,
+              border: `1px solid ${THEME.steel}66`,
+              boxShadow: `0 2px 8px ${THEME.navy}99`,
             }}
           >
             <Image
@@ -208,8 +208,8 @@ export default function Navbar({ active }: { active: string }) {
                   borderRadius: 16,
                   background: THEME.glass,
                   backdropFilter: "blur(16px)",
-                  border: `1px solid ${THEME.cyan}44`,
-                  boxShadow: `0 12px 40px rgba(0,0,0,.5), 0 0 30px ${THEME.cyan}22`,
+                  border: `1px solid ${THEME.steel}66`,
+                  boxShadow: "0 12px 40px rgba(0,0,0,.5)",
                   display: "flex",
                   flexDirection: "column",
                   gap: 2,
@@ -225,7 +225,7 @@ export default function Navbar({ active }: { active: string }) {
                     style={{
                       position: "relative",
                       textAlign: "left",
-                      background: active === n.id ? `${THEME.cyan}14` : "transparent",
+                      background: active === n.id ? `${THEME.steel}26` : "transparent",
                       border: "none",
                       cursor: "pointer",
                       padding: "10px 14px",
@@ -244,7 +244,6 @@ export default function Navbar({ active }: { active: string }) {
                         height: 6,
                         borderRadius: "50%",
                         background: active === n.id ? GRAD : THEME.border,
-                        boxShadow: active === n.id ? `0 0 8px ${THEME.cyan}` : "none",
                       }}
                     />
                     {n.label}
