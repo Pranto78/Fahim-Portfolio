@@ -203,7 +203,7 @@ export default function About() {
             role-based backend systems.
           </p>
           <div style={{ marginTop: 26, display: "flex", flexDirection: "column", gap: 12 }}>
-            <Row icon={<Briefcase size={18} />} label="Octopi Digital — Junior Software Engineer" />
+            <Row icon={<Briefcase size={18} />} label="Octopi Digital —  Software Engineer" />
             <Row icon={<MapPin size={18} />} label={PERSON.location} />
             <Row icon={<GraduationCap size={18} />} label="BSc in CSE, AIUB (expected 2026)" />
           </div>

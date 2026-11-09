@@ -4,7 +4,7 @@
 export const PERSON = {
   name: "MD. Fahim Shahriyar Pranto",
   logo: "https://i.ibb.co.com/hxwgLyVM/fsp-logo-icon.jpg",
-  role: "Junior Software Engineer",
+  role: "Software Engineer",
   team: "Technology Team · Octopi Digital",
   empId: "ODL104",
   company: "Octopi Digital",
