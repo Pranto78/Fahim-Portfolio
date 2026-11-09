@@ -211,7 +211,7 @@ export default function Hero() {
 
         <div className="hero-visual">
           <OrbitalPortal
-            photoSrc={picture1.src}
+            photoSrc={picture1}
             photoAlt={PERSON.name}
           />
         </div>
