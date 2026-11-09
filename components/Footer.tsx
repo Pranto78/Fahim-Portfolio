@@ -3,6 +3,7 @@ import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
 import { THEME } from "@/config/theme.config";
 import { PERSON } from "@/data/person";
+import logo from "@/asset/logo-f-sky-silver.png";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
@@ -32,16 +33,18 @@ export default function Footer() {
               flexShrink: 0,
               overflow: "hidden",
               borderRadius: 14,
-              border: `1px solid ${THEME.cyan}44`,
-              boxShadow: `0 0 22px ${THEME.cyan}18`,
+              background: THEME.bgSoft,
+              border: `1px solid ${THEME.steel}66`,
+              boxShadow: `0 2px 8px ${THEME.navy}99`,
             }}
           >
             <Image
-              src={PERSON.logo}
-              alt="FSP brand logo"
+              src={logo}
+              alt="Fahim logo"
               fill
               sizes="48px"
-              style={{ objectFit: "cover" }}
+              quality={90}
+              style={{ objectFit: "contain", padding: 4 }}
             />
           </motion.div>
           <div>

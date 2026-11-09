@@ -5,9 +5,9 @@ import { createPortal } from "react-dom";
 import { motion, AnimatePresence, useMotionValue, useSpring, useReducedMotion } from "framer-motion";
 import { THEME, GRAD } from "@/config/theme.config";
 import { NAV } from "@/data/skills";
-import { PERSON } from "@/data/person";
 import { scrollToSection } from "@/lib/scrollToSection";
 import Spaceship from "./Spaceship";
+import logo from "@/asset/logo-f-sky-silver.png";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
@@ -116,23 +116,24 @@ export default function Navbar({ active }: { active: string }) {
             style={{
               cursor: "pointer",
               position: "relative",
-              width: 40,
-              height: 40,
+              width: 52,
+              height: 52,
               padding: 0,
               overflow: "hidden",
-              borderRadius: 12,
+              borderRadius: 15,
               background: THEME.bgSoft,
               border: `1px solid ${THEME.steel}66`,
               boxShadow: `0 2px 8px ${THEME.navy}99`,
             }}
           >
             <Image
-              src={PERSON.logo}
-              alt="FSP brand logo"
+              src={logo}
+              alt="Fahim logo"
               fill
               priority
-              sizes="40px"
-              style={{ objectFit: "cover" }}
+              sizes="52px"
+              quality={90}
+              style={{ objectFit: "contain", padding: 4 }}
             />
           </motion.button>
           <div style={{ display: "flex", gap: 4 }}>

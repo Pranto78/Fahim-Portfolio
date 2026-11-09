@@ -1,10 +1,7 @@
-import { PERSON } from "@/data/person";
 
 export default function Head() {
   return (
     <>
-      <link rel="icon" href={PERSON.logo} />
-      <link rel="apple-touch-icon" href={PERSON.logo} />
       <link rel="preconnect" href="https://fonts.googleapis.com" />
       <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       <link

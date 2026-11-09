@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { PERSON } from "@/data/person";
 
 export const metadata: Metadata = {
   title: "MD. Fahim Shahriyar Pranto — Software Engineer",
@@ -11,10 +10,7 @@ export const metadata: Metadata = {
     description: "Software Engineer · React · React Native · Node",
     type: "website",
   },
-  icons: {
-    icon: PERSON.logo,
-    apple: PERSON.logo,
-  },
+  // Favicon + Apple touch icon come from app/icon.png and app/apple-icon.png (Next file conventions).
 };
 
 export default function RootLayout({
