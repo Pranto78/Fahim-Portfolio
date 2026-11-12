@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -11,6 +11,13 @@ export const metadata: Metadata = {
     type: "website",
   },
   // Favicon + Apple touch icon come from app/icon.png and app/apple-icon.png (Next file conventions).
+};
+
+// viewport-fit=cover exposes env(safe-area-inset-*) for the mobile tab bar.
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
 };
 
 export default function RootLayout({

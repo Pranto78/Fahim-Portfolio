@@ -20,6 +20,7 @@ function Teaser({ onOpen }: { onOpen: () => void }) {
   return (
     <div
       onClick={onOpen}
+      className="fbot-teaser"
       style={{
         position: "fixed",
         bottom: 92,
@@ -68,7 +69,7 @@ export default function FloatingBot() {
       <button
         onClick={() => setOpen((o) => !o)}
         aria-label={open ? "Close chat" : "Open chat"}
-        className="btn btn-primary"
+        className="btn btn-primary fbot-btn"
         style={{
           position: "fixed",
           bottom: 24,
@@ -85,6 +86,7 @@ export default function FloatingBot() {
 
       {open && (
         <div
+          className="fbot-panel"
           style={{
             position: "fixed",
             bottom: 92,

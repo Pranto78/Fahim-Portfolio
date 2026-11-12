@@ -924,14 +924,21 @@ a {
 }
 
 @media (max-width: 900px) {
-  .social-rail {
-    display: none;
+  /* Tighter hero on stacked layouts: no forced full-height, less top/bottom air. */
+  #hero {
+    min-height: 0 !important;
+    padding-top: 104px !important;
+    padding-bottom: 16px !important;
+  }
+
+  #about {
+    padding-top: 40px !important;
   }
 
   .hero-content {
     flex-direction: column;
     align-items: flex-start;
-    gap: 34px;
+    gap: 22px;
   }
 
   .hero-copy {
@@ -954,11 +961,26 @@ a {
     white-space: normal;
   }
 
+  /* Social icons: same buttons, laid out as a horizontal row under the CTAs. */
   .hero-social {
+    flex: none;
+    display: block;
+    align-self: flex-start;
+  }
+
+  .social-rail-inner,
+  .social-rail-list {
+    flex-direction: row !important;
+  }
+
+  .social-rail-line {
     display: none;
   }
 
+  /* Desktop's flex-basis (≥540px) becomes HEIGHT in a column — the source of the
+     big empty band around the orbit on mobile. Size to content instead. */
   .hero-visual {
+    flex: none;
     width: min(96vw, 480px);
     min-width: 0;
     align-self: center;
@@ -1015,5 +1037,196 @@ a {
   * {
     animation: none !important;
     transition: none !important;
+  }
+}
+
+/* =========================================================================
+   Mobile + tablet navigation (≤1024px) — rendered by components/MobileNav.tsx.
+   Desktop never renders these elements, so the desktop navbar is untouched.
+   ========================================================================= */
+.m-topbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 90;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: calc(12px + env(safe-area-inset-top)) 16px 12px;
+  border-bottom: 1px solid transparent;
+  transition: background-color 0.35s var(--btn-ease), border-color 0.35s var(--btn-ease),
+    backdrop-filter 0.35s var(--btn-ease);
+}
+
+.m-topbar.is-scrolled {
+  background-color: rgba(10, 14, 20, 0.55);
+  backdrop-filter: blur(18px) saturate(160%);
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
+  border-bottom-color: rgba(179, 207, 229, 0.1);
+}
+
+.m-topbar-logo {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  overflow: hidden;
+  cursor: pointer;
+  border-radius: 13px;
+  background: var(--bg-soft);
+  border: 1px solid rgba(74, 127, 167, 0.4);
+  box-shadow: 0 2px 8px rgba(10, 25, 49, 0.6);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.m-topbar-cta {
+  height: 42px;
+  padding: 0 18px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.m-topbar-cta.is-active {
+  border-color: rgba(179, 207, 229, 0.5);
+  box-shadow:
+    inset 0 1px 0 rgba(246, 250, 253, 0.12),
+    0 0 0 3px rgba(74, 127, 167, 0.28);
+}
+
+.m-tabbar {
+  position: fixed;
+  left: 12px;
+  right: 12px;
+  bottom: calc(12px + env(safe-area-inset-bottom));
+  margin: 0 auto;
+  max-width: 560px;
+  height: 68px;
+  z-index: 90;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  border-radius: 24px;
+  background: linear-gradient(180deg, rgba(22, 40, 66, 0.9) 0%, rgba(12, 16, 23, 0.95) 100%);
+  backdrop-filter: blur(60px) saturate(180%);
+  -webkit-backdrop-filter: blur(60px) saturate(180%);
+  border: 1px solid rgba(179, 207, 229, 0.14);
+  box-shadow:
+    inset 0 1px 0 rgba(246, 250, 253, 0.08),
+    0 14px 34px rgba(0, 0, 0, 0.55);
+}
+
+/* soft glass sheen along the top edge */
+.m-tabbar::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 18%;
+  right: 18%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(179, 207, 229, 0.45), transparent);
+  pointer-events: none;
+}
+
+.m-tab {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 3px;
+  padding: 0 0 9px;
+  min-width: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--muted);
+  font-family: "Inter", sans-serif;
+  -webkit-tap-highlight-color: transparent;
+  transition: color 0.3s var(--btn-ease);
+}
+
+.m-tab:focus-visible {
+  outline: 2px solid var(--btn-ice);
+  outline-offset: -4px;
+  border-radius: 16px;
+}
+
+.m-tab-icon-wrap {
+  position: relative;
+  width: 46px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+}
+
+/* raised active bubble — same fill as the primary button, ringed in page bg */
+.m-tab-bubble {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 46px;
+  height: 46px;
+  margin-left: -23px;
+  margin-top: -37px;
+  border-radius: 50%;
+  background-image: linear-gradient(135deg, var(--btn-steel) 0%, #2f5f88 45%, var(--btn-deep) 100%);
+  border: 1px solid rgba(179, 207, 229, 0.22);
+  box-shadow:
+    0 0 0 5px rgba(10, 14, 20, 0.92),
+    inset 0 1px 0 rgba(246, 250, 253, 0.16),
+    0 10px 20px rgba(10, 25, 49, 0.7);
+}
+
+.m-tab-icon {
+  position: relative;
+  display: grid;
+  place-items: center;
+}
+
+.m-tab.is-active {
+  color: var(--btn-snow);
+}
+
+.m-tab-label {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 10.5px;
+  line-height: 13px;
+  letter-spacing: 0.01em;
+}
+
+.m-tab.is-active .m-tab-label {
+  color: var(--btn-ice);
+  font-weight: 600;
+}
+
+@media (max-width: 1024px) {
+  /* keep the footer / last section clear of the floating tab bar */
+  body {
+    padding-bottom: calc(92px + env(safe-area-inset-bottom));
+  }
+
+  /* lift the AI assistant above the tab bar */
+  .fbot-btn {
+    bottom: calc(96px + env(safe-area-inset-bottom)) !important;
+    right: 16px !important;
+    width: 52px !important;
+    height: 52px !important;
+  }
+
+  .fbot-teaser {
+    bottom: calc(158px + env(safe-area-inset-bottom)) !important;
+    right: 16px !important;
+    max-width: calc(100vw - 32px);
+  }
+
+  .fbot-panel {
+    bottom: calc(158px + env(safe-area-inset-bottom)) !important;
+    right: 12px !important;
+    height: min(540px, calc(100vh - 250px)) !important;
+    height: min(540px, calc(100dvh - 250px - env(safe-area-inset-bottom))) !important;
   }
 }

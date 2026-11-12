@@ -7,6 +7,7 @@ import { THEME, GRAD } from "@/config/theme.config";
 import { NAV } from "@/data/skills";
 import { scrollToSection } from "@/lib/scrollToSection";
 import Spaceship from "./Spaceship";
+import MobileNav, { MOBILE_QUERY } from "./MobileNav";
 import logo from "@/asset/logo-f-sky-silver.png";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
@@ -15,9 +16,21 @@ export default function Navbar({ active }: { active: string }) {
   const [ship, setShip] = useState(false); // true → spaceship mode
   const [open, setOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const [isMobile, setIsMobile] = useState(
+    () => typeof window !== "undefined" && window.matchMedia(MOBILE_QUERY).matches
+  );
   const reduced = useReducedMotion();
 
   useEffect(() => setMounted(true), []);
+
+  // Mobile + tablet get the top bar + bottom tab bar; desktop keeps the navbar/spaceship.
+  useEffect(() => {
+    const mq = window.matchMedia(MOBILE_QUERY);
+    const update = () => setIsMobile(mq.matches);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, []);
   const lastY = useRef(0);
   const resetTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const clusterRef = useRef<HTMLDivElement>(null);
@@ -84,6 +97,14 @@ export default function Navbar({ active }: { active: string }) {
   };
 
   if (!mounted) return null;
+
+  if (isMobile) {
+    return createPortal(
+      // Slightly larger gap so section headings clear the fixed top bar.
+      <MobileNav active={active} scrolled={ship} go={(id) => scrollToSection(id, 84)} />,
+      document.body
+    );
+  }
 
   return createPortal(
     <AnimatePresence mode="wait">

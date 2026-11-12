@@ -53,14 +53,15 @@ function SocialButton({ s }: { s: Social }) {
 
 export default function SocialRail() {
   return (
-    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 14 }}>
+    <div className="social-rail-inner" style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 14 }}>
       {/* top connector line */}
-      <div style={{ width: 2, height: 44, background: `linear-gradient(${THEME.cyan}, transparent)`, opacity: 0.5 }} />
+      <div className="social-rail-line" style={{ width: 2, height: 44, background: `linear-gradient(${THEME.cyan}, transparent)`, opacity: 0.5 }} />
       <motion.div
         initial="hidden"
         whileInView="show"
         viewport={{ once: true }}
         variants={{ show: { transition: { staggerChildren: 0.12, delayChildren: 0.2 } } }}
+        className="social-rail-list"
         style={{ display: "flex", flexDirection: "column", gap: 14 }}
       >
         {SOCIALS.map((s) => (
@@ -68,7 +69,7 @@ export default function SocialRail() {
         ))}
       </motion.div>
       {/* bottom connector line */}
-      <div style={{ width: 2, height: 44, background: `linear-gradient(transparent, ${THEME.violet})`, opacity: 0.5 }} />
+      <div className="social-rail-line" style={{ width: 2, height: 44, background: `linear-gradient(transparent, ${THEME.violet})`, opacity: 0.5 }} />
     </div>
   );
 }
