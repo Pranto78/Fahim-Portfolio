@@ -1,6 +1,6 @@
 "use client";
 import { useReducedMotion } from "framer-motion";
-import { THEME } from "@/config/theme.config";
+import { SPACE } from "@/config/theme.config"; // fixed space theme — not editable from remoteControl
 
 /**
  * Sleek alien craft used as the collapsed nav trigger. Angular metallic body,
@@ -30,7 +30,7 @@ export default function Spaceship({
         padding: 0,
         cursor: "pointer",
         lineHeight: 0,
-        filter: `drop-shadow(0 0 12px ${THEME.cyan}${open ? "88" : "55"})`,
+        filter: `drop-shadow(0 0 12px ${SPACE.cyan}${open ? "88" : "55"})`,
         transition: "filter .3s",
       }}
     >
@@ -53,19 +53,19 @@ export default function Spaceship({
             </linearGradient>
             <radialGradient id="ship-cockpit" cx="0.5" cy="0.4" r="0.6">
               <stop stopColor="#BFFBFF" />
-              <stop offset="0.5" stopColor={THEME.cyan} />
+              <stop offset="0.5" stopColor={SPACE.cyan} />
               <stop offset="1" stopColor="#0B7C86" />
             </radialGradient>
             <radialGradient id="ship-engine" cx="0.5" cy="0.3" r="0.7">
               <stop stopColor="#EAFBFF" />
-              <stop offset="0.4" stopColor={THEME.cyan} />
-              <stop offset="1" stopColor={THEME.violet} />
+              <stop offset="0.4" stopColor={SPACE.cyan} />
+              <stop offset="1" stopColor={SPACE.violet} />
             </radialGradient>
           </defs>
 
           {/* wings */}
-          <path d="M23 30 L4 50 L15 52 L25 45 Z" fill="url(#ship-wing)" stroke={THEME.cyan} strokeOpacity="0.5" strokeWidth="1" />
-          <path d="M41 30 L60 50 L49 52 L39 45 Z" fill="url(#ship-wing)" stroke={THEME.cyan} strokeOpacity="0.5" strokeWidth="1" />
+          <path d="M23 30 L4 50 L15 52 L25 45 Z" fill="url(#ship-wing)" stroke={SPACE.cyan} strokeOpacity="0.5" strokeWidth="1" />
+          <path d="M41 30 L60 50 L49 52 L39 45 Z" fill="url(#ship-wing)" stroke={SPACE.cyan} strokeOpacity="0.5" strokeWidth="1" />
 
           {/* engine glow */}
           <g
@@ -77,19 +77,19 @@ export default function Spaceship({
           >
             <ellipse cx="27" cy="60" rx="3.4" ry="7" fill="url(#ship-engine)" />
             <ellipse cx="37" cy="60" rx="3.4" ry="7" fill="url(#ship-engine)" />
-            <ellipse cx="32" cy="63" rx="9" ry="4" fill={THEME.cyan} opacity="0.18" />
+            <ellipse cx="32" cy="63" rx="9" ry="4" fill={SPACE.cyan} opacity="0.18" />
           </g>
 
           {/* fuselage */}
           <path
             d="M32 3 L43 30 L39 54 L25 54 L21 30 Z"
             fill="url(#ship-body)"
-            stroke={THEME.cyan}
+            stroke={SPACE.cyan}
             strokeOpacity="0.7"
             strokeWidth="1.2"
           />
           {/* spine highlight */}
-          <path d="M32 6 L32 50" stroke={THEME.cyan} strokeOpacity="0.35" strokeWidth="1" />
+          <path d="M32 6 L32 50" stroke={SPACE.cyan} strokeOpacity="0.35" strokeWidth="1" />
 
           {/* cockpit */}
           <ellipse cx="32" cy="26" rx="4.6" ry="8" fill="url(#ship-cockpit)" />

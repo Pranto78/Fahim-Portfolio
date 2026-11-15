@@ -445,6 +445,7 @@ export default function OrbitalPortal({
                 loading="eager"
                 fetchPriority="high"
                 placeholder={isStatic ? "blur" : "empty"}
+                unoptimized={!isStatic}
                 draggable={false}
               />
             ) : (

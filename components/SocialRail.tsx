@@ -3,16 +3,10 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Instagram, Linkedin, Facebook, Github, type LucideIcon } from "lucide-react";
 import { THEME } from "@/config/theme.config";
-import { PERSON } from "@/data/person";
+import { useContent } from "./ContentProvider";
 
 type Social = { label: string; href: string; icon: LucideIcon; accent: string };
 
-const SOCIALS: Social[] = [
-  { label: "Instagram", href: PERSON.instagram, icon: Instagram, accent: "#E1306C" },
-  { label: "LinkedIn", href: PERSON.linkedin, icon: Linkedin, accent: "#0A94E0" },
-  { label: "Facebook", href: PERSON.facebook, icon: Facebook, accent: "#1877F2" },
-  { label: "GitHub", href: PERSON.github, icon: Github, accent: THEME.text },
-];
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
@@ -52,6 +46,14 @@ function SocialButton({ s }: { s: Social }) {
 }
 
 export default function SocialRail() {
+  const { profile: PERSON } = useContent();
+  // Empty links (cleared in remoteControl) are hidden.
+  const SOCIALS: Social[] = [
+    { label: "Instagram", href: PERSON.instagram, icon: Instagram, accent: "#E1306C" },
+    { label: "LinkedIn", href: PERSON.linkedin, icon: Linkedin, accent: "#0A94E0" },
+    { label: "Facebook", href: PERSON.facebook, icon: Facebook, accent: "#1877F2" },
+    { label: "GitHub", href: PERSON.github, icon: Github, accent: THEME.text },
+  ].filter((s) => s.href);
   return (
     <div className="social-rail-inner" style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 14 }}>
       {/* top connector line */}

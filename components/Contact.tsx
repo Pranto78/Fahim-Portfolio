@@ -16,7 +16,7 @@ import {
   X,
 } from "lucide-react";
 import { THEME } from "@/config/theme.config";
-import { PERSON } from "@/data/person";
+import { useContent } from "./ContentProvider";
 import { Eyebrow, Heading, Section } from "./ui";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
@@ -117,6 +117,7 @@ function getHiringSuggestions(value: string): HiringSuggestion[] {
 }
 
 export default function Contact() {
+  const { profile: PERSON, text } = useContent();
   const reduced = useReducedMotion();
   const [form, setForm] = useState<ContactFields>(EMPTY_FORM);
   const [startedAt, setStartedAt] = useState(() => Date.now());
@@ -314,9 +315,9 @@ export default function Contact() {
 
   return (
     <Section id="contact" variant="fade" style={{ padding: "48px 5vw" }}>
-      <Eyebrow icon={MessageSquareText}>Contact</Eyebrow>
+      <Eyebrow icon={MessageSquareText}>{text.contact.eyebrow}</Eyebrow>
       <div className="contact-heading">
-        <Heading>Let&apos;s build something</Heading>
+        <Heading>{text.contact.heading}</Heading>
       </div>
 
       <div style={{ display: "flex", flexWrap: "wrap", gap: 16, alignItems: "flex-start" }}>

@@ -1,17 +1,27 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
+import { getContent } from "@/lib/content/server";
+import { themeCssVars } from "@/lib/content/themeCss";
 
-export const metadata: Metadata = {
-  title: "MD. Fahim Shahriyar Pranto — Software Engineer",
-  description:
-    "Software Engineer at Octopi Digital. Web & mobile products in React, React Native and Node. Ask the AI assistant anything.",
-  openGraph: {
-    title: "MD. Fahim Shahriyar Pranto",
-    description: "Software Engineer · React · React Native · Node",
-    type: "website",
-  },
-  // Favicon + Apple touch icon come from app/icon.png and app/apple-icon.png (Next file conventions).
-};
+// Title, description and favicon come from remoteControl (Branding). Defaults live in
+// lib/content/defaults.ts; the default favicon files are public/icon.png + public/apple-icon.png.
+export async function generateMetadata(): Promise<Metadata> {
+  const { branding, profile } = await getContent();
+  const icon = branding.faviconUrl || "/icon.png";
+  return {
+    title: branding.siteTitle,
+    description: branding.siteDescription,
+    openGraph: {
+      title: profile.name,
+      description: `${profile.role} · React · React Native · Node`,
+      type: "website",
+    },
+    icons: {
+      icon,
+      apple: branding.faviconUrl || "/apple-icon.png",
+    },
+  };
+}
 
 // viewport-fit=cover exposes env(safe-area-inset-*) for the mobile tab bar.
 export const viewport: Viewport = {
@@ -20,14 +30,19 @@ export const viewport: Viewport = {
   viewportFit: "cover",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const { theme } = await getContent();
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        {/* Theme colors from remoteControl → CSS variables used by globals.css (hex-validated). */}
+        <style id="theme-vars" dangerouslySetInnerHTML={{ __html: themeCssVars(theme) }} />
+        {children}
+      </body>
     </html>
   );
 }

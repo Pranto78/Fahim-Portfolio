@@ -4,7 +4,7 @@ import Image from "next/image";
 import { createPortal } from "react-dom";
 import { motion, AnimatePresence, useMotionValue, useSpring, useReducedMotion } from "framer-motion";
 import { THEME, GRAD } from "@/config/theme.config";
-import { NAV } from "@/data/skills";
+import { useContent } from "./ContentProvider";
 import { scrollToSection } from "@/lib/scrollToSection";
 import Spaceship from "./Spaceship";
 import MobileNav, { MOBILE_QUERY } from "./MobileNav";
@@ -13,6 +13,8 @@ import logo from "@/asset/logo-f-sky-silver.png";
 const EASE = [0.16, 1, 0.3, 1] as const;
 
 export default function Navbar({ active }: { active: string }) {
+  const { text, branding } = useContent();
+  const NAV = text.nav;
   const [ship, setShip] = useState(false); // true → spaceship mode
   const [open, setOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
@@ -148,7 +150,8 @@ export default function Navbar({ active }: { active: string }) {
             }}
           >
             <Image
-              src={logo}
+              src={branding.logoUrl || logo}
+              unoptimized={!!branding.logoUrl}
               alt="Fahim logo"
               fill
               priority

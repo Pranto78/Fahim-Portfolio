@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { generalPrompt, projectPrompt } from "@/lib/prompts";
+import { getContent } from "@/lib/content/server";
 
 type Msg = { role: "user" | "assistant"; content: string };
 
@@ -17,9 +18,10 @@ export async function POST(req: NextRequest) {
     }
 
     // Build the system prompt server-side (knowledge never leaks to client)
+    const content = await getContent();
     let system: string | null = null;
-    if (mode === "project" && projectId) system = projectPrompt(projectId);
-    else system = generalPrompt();
+    if (mode === "project" && projectId) system = projectPrompt(content, projectId);
+    else system = generalPrompt(content);
 
     if (!system) {
       return NextResponse.json({ error: "Unknown project" }, { status: 400 });

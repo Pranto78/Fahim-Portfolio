@@ -1,53 +1,27 @@
 "use client";
 import { useState } from "react";
 import { Sparkles, Hand, ArrowUpRight, Briefcase } from "lucide-react";
-import type { IconType } from "react-icons";
-import {
-  SiExpo,
-  SiExpress,
-  SiFirebase,
-  SiMongodb,
-  SiNodedotjs,
-  SiReact,
-  SiRedux,
-  SiTypescript,
-  SiVite,
-} from "react-icons/si";
 import { THEME } from "@/config/theme.config";
-import { PROJECTS, Project, ProjectTech } from "@/data/projects";
+import type { ProjectItem } from "@/lib/content/types";
 import { Section, Eyebrow, Heading } from "./ui";
 import { Orb } from "./Orb";
 import ChatPanel from "./ChatPanel";
 import SnakeBorder from "./SnakeBorder";
+import SkillLogo from "./SkillLogo";
+import { useContent, skillById } from "./ContentProvider";
 
-type TechVisual = {
-  label: string;
-  icon: IconType;
-  color: string;
-};
-
-const TECH_VISUALS: Record<ProjectTech, TechVisual> = {
-  react: { label: "React", icon: SiReact, color: "#61DAFB" },
-  "react-native": { label: "React Native", icon: SiReact, color: "#61DAFB" },
-  typescript: { label: "TypeScript", icon: SiTypescript, color: "#3178C6" },
-  vite: { label: "Vite", icon: SiVite, color: "#A855F7" },
-  expo: { label: "Expo", icon: SiExpo, color: "#F2F2F2" },
-  node: { label: "Node.js", icon: SiNodedotjs, color: "#5FA04E" },
-  express: { label: "Express", icon: SiExpress, color: "#F2F2F2" },
-  redux: { label: "Redux Toolkit", icon: SiRedux, color: "#764ABC" },
-  mongodb: { label: "MongoDB", icon: SiMongodb, color: "#47A248" },
-  firebase: { label: "Firebase", icon: SiFirebase, color: "#FFCA28" },
-};
+type Project = ProjectItem;
 
 function ProjectStackLogos({
   stack,
   active,
   compact = false,
 }: {
-  stack: ProjectTech[];
+  stack: string[];
   active: boolean;
   compact?: boolean;
 }) {
+  const skills = skillById(useContent());
   const size = compact ? 29 : 34;
   const iconSize = compact ? 15 : 18;
 
@@ -63,9 +37,11 @@ function ProjectStackLogos({
         paddingTop: compact ? 0 : 16,
       }}
     >
-      {stack.map((tech, index) => {
-        const visual = TECH_VISUALS[tech];
-        const Icon = visual.icon;
+      {stack.map((id, index) => {
+        const skill = skills.get(id);
+        if (!skill) return null; // skill deleted in remoteControl
+        const visual = { label: skill.name, color: skill.color };
+        const tech = id;
 
         return (
           <span
@@ -89,7 +65,7 @@ function ProjectStackLogos({
               transitionDelay: active ? `${index * 45}ms` : "0ms",
             }}
           >
-            <Icon size={iconSize} aria-hidden />
+            <SkillLogo skill={skill} size={iconSize} color="currentColor" />
           </span>
         );
       })}
@@ -137,7 +113,7 @@ function ProjectCard({ p }: { p: Project }) {
           </li>
         ))}
       </ul>
-      <ProjectStackLogos stack={p.visualStack} active={hover} />
+      <ProjectStackLogos stack={p.stack} active={hover} />
     </div>
   );
 }
@@ -182,12 +158,15 @@ function DraggableProjectCard({ p, selected, onSelect }: { p: Project; selected:
       </div>
       <div style={{ fontSize: 12, color: THEME.cyan, fontFamily: THEME.fontMono, marginTop: 4 }}>{p.tag}</div>
       <p style={{ fontSize: 13, color: THEME.muted, marginTop: 8, lineHeight: 1.5 }}>{p.blurb}</p>
-      <ProjectStackLogos stack={p.visualStack} active={active} compact />
+      <ProjectStackLogos stack={p.stack} active={active} compact />
     </div>
   );
 }
 
 export default function Projects() {
+  const c = useContent();
+  const PROJECTS = c.projects;
+  const t = c.text.projects;
   const [expanded, setExpanded] = useState(false);
   const [selected, setSelected] = useState<Project | null>(null);
   const [dragOver, setDragOver] = useState(false);
@@ -202,8 +181,8 @@ export default function Projects() {
 
   return (
     <Section id="projects" variant="right">
-      <Eyebrow icon={Briefcase}>Work</Eyebrow>
-      <Heading>Projects I contributed at Octopi</Heading>
+      <Eyebrow icon={Briefcase}>{t.eyebrow}</Eyebrow>
+      <Heading>{t.heading}</Heading>
 
       {!expanded && (
         <>
@@ -217,7 +196,7 @@ export default function Projects() {
             onClick={() => setExpanded(true)}
             style={{ marginTop: 28, padding: "13px 24px", borderRadius: 12, fontWeight: 600, fontSize: 15 }}
           >
-            <Sparkles size={18} /> Want to know about a project? Ask the AI
+            <Sparkles size={18} /> {t.askAiCta}
           </button>
         </>
       )}
@@ -227,7 +206,7 @@ export default function Projects() {
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16, flexWrap: "wrap", gap: 10 }}>
             <div style={{ fontFamily: THEME.fontMono, fontSize: 13, color: THEME.muted }}>
               <Hand size={14} style={{ display: "inline", marginRight: 6, color: THEME.cyan }} />
-              Drag a project card into the chat to talk about it
+              {t.dragHint}
             </div>
             <button
               onClick={() => {

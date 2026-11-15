@@ -4,7 +4,7 @@ import { FileText, MapPin } from "lucide-react";
 import { BsOpenai } from "react-icons/bs";
 import { SiClaude, SiGooglegemini, SiPerplexity } from "react-icons/si";
 import { THEME } from "@/config/theme.config";
-import { PERSON } from "@/data/person";
+import { useContent } from "./ContentProvider";
 import { scrollToSection } from "@/lib/scrollToSection";
 import { useTypewriterCycle } from "@/lib/useTypewriter";
 import { Section } from "./ui";
@@ -12,14 +12,6 @@ import SocialRail from "./SocialRail";
 import OrbitalPortal from "./OrbitalPortal";
 import picture1 from "@/asset/pranto.png";
 
-const GREETING_INTRO_PHRASES = ["Hello, I'm Fahim", "Nice to meet you", "Welcome to my web"];
-const DIRECT_INTRO_PHRASES = ["I'm Fahim", "Nice to meet you", "Welcome to my web"];
-
-const HERO_STATS = [
-  { value: "1+", label: "year experience" },
-  { value: "5+", label: "products shipped" },
-  { value: "Web + Mobile", label: "full stack" },
-];
 
 function getLocalGreeting() {
   const hour = new Date().getHours();
@@ -68,10 +60,12 @@ function AiLogoSlot({ className = "" }: { className?: string }) {
 }
 
 export default function Hero() {
+  const { profile: PERSON, text, branding } = useContent();
+  const hero = text.hero;
   const [greeting, setGreeting] = useState<string | null>(null);
   const [typedGreeting, setTypedGreeting] = useState("");
   const [greetingDone, setGreetingDone] = useState(false);
-  const introPhrases = greeting ? GREETING_INTRO_PHRASES : DIRECT_INTRO_PHRASES;
+  const introPhrases = greeting ? hero.introWithGreeting : hero.introDirect;
   const typedIntro = useTypewriterCycle(introPhrases, {
     typeSpeed: 110,
     deleteSpeed: 60,
@@ -137,7 +131,7 @@ export default function Hero() {
         <div className="hero-copy">
           <div className="hero-status-card" aria-label={`Available in ${PERSON.location}`}>
             <span className="hero-status-dot" />
-            <span>Available</span>
+            <span>{hero.statusLabel}</span>
             <span className="hero-status-divider" />
             <MapPin size={14} />
             <span>{PERSON.location}</span>
@@ -163,12 +157,11 @@ export default function Hero() {
           <p style={{ fontSize: 19, color: THEME.text, marginTop: 10, fontFamily: THEME.fontBody }}>
             {PERSON.role} <span style={{ color: THEME.muted }}>@</span>{" "}
             <a href={PERSON.companyUrl} target="_blank" rel="noreferrer" className="accent-link">
-              Octopi Digital
+              {PERSON.company}
             </a>
           </p>
           <p style={{ fontSize: 15.5, color: THEME.muted, marginTop: 12, maxWidth: 480, lineHeight: 1.6 }}>
-            I build web &amp; mobile products end-to-end — React, React Native and Node — from CRM
-            platforms to telehealth and AI wellness apps.
+            {hero.tagline}
           </p>
           <div style={{ display: "flex", gap: 12, marginTop: 30, flexWrap: "wrap" }}>
             <button
@@ -176,7 +169,7 @@ export default function Hero() {
               onClick={() => scrollToSection("projects")}
               style={{ padding: "13px 24px", borderRadius: 12, fontWeight: 600, fontSize: 15 }}
             >
-              View Projects
+              {hero.primaryCta}
             </button>
             <a
               className="btn btn-secondary"
@@ -185,12 +178,12 @@ export default function Hero() {
               rel="noreferrer"
               style={{ padding: "13px 24px", borderRadius: 12, fontWeight: 600, fontSize: 15 }}
             >
-              <FileText size={18} /> View CV
+              <FileText size={18} /> {hero.secondaryCta}
             </a>
           </div>
 
           <dl className="hero-stats">
-            {HERO_STATS.map((s) => (
+            {hero.stats.map((s) => (
               <div key={s.label} className="hero-stat">
                 <dt className="hero-stat-value">{s.value}</dt>
                 <dd className="hero-stat-label">{s.label}</dd>
@@ -205,7 +198,7 @@ export default function Hero() {
 
         <div className="hero-visual">
           <OrbitalPortal
-            photoSrc={picture1}
+            photoSrc={branding.heroImageUrl || picture1}
             photoAlt={PERSON.name}
           />
         </div>

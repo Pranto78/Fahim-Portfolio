@@ -3,6 +3,7 @@ import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
 import { Home, User, Cpu, FolderKanban, GraduationCap, Send, type LucideIcon } from "lucide-react";
 import logo from "@/asset/logo-f-sky-silver.png";
+import { useContent } from "./ContentProvider";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
@@ -28,6 +29,8 @@ export default function MobileNav({
   scrolled: boolean;
   go: (id: string) => void;
 }) {
+  const { text, branding } = useContent();
+  const navLabel = new Map(text.nav.map((n) => [n.id, n.label]));
   const reduced = useReducedMotion();
   const contactActive = active === "contact";
 
@@ -47,7 +50,8 @@ export default function MobileNav({
           className="m-topbar-logo"
         >
           <Image
-            src={logo}
+            src={branding.logoUrl || logo}
+            unoptimized={!!branding.logoUrl}
             alt="Fahim logo"
             fill
             priority
@@ -75,7 +79,8 @@ export default function MobileNav({
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.45, ease: EASE, delay: 0.05 }}
       >
-        {TABS.map(({ id, label, Icon }) => {
+        {TABS.map(({ id, label: fallbackLabel, Icon }) => {
+          const label = navLabel.get(id) ?? fallbackLabel;
           const on = active === id;
           return (
             <button

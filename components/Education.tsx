@@ -2,35 +2,21 @@
 import { GraduationCap } from "lucide-react";
 import { THEME, GRAD } from "@/config/theme.config";
 import { Section, Eyebrow, Heading } from "./ui";
+import { useContent } from "./ContentProvider";
 
-// Only higher education / professional learning is shown on the timeline.
-// School-level background (HSC, SSC, JSC, PSC) is deliberately NOT listed here —
-// it still lives in PERSON.schooling (data/person.ts) so the AI assistant can
-// answer if a visitor asks about his school, college or elementary education.
-const items = [
-  {
-    t: "BSc in Computer Science & Engineering",
-    s: "American International University-Bangladesh (AIUB)",
-    d: "Expected 2026",
-    note: "Coursework: DSA, DBMS, OOP, Web Engineering, Software Engineering.",
-  },
-  {
-    t: "Complete Web Development Course",
-    s: "Programming Hero",
-    d: "Jun 2025 – Feb 2026",
-    note: "Full-stack: HTML, CSS, JS, React, Node, MongoDB. 10+ projects.",
-  },
-];
-
+// Only entries marked "show on site" in remoteControl reach the browser. School-level
+// background (HSC, SSC, JSC, PSC) is AI-only by default — the assistant can still answer about it.
 export default function Education() {
+  const c = useContent();
+  const items = c.education.map((e) => ({ t: e.title, s: e.institution, d: e.date, note: e.note, id: e.id }));
   return (
     <Section id="education" variant="flip">
-      <Eyebrow icon={GraduationCap}>Background</Eyebrow>
-      <Heading>Education &amp; Learning</Heading>
+      <Eyebrow icon={GraduationCap}>{c.text.education.eyebrow}</Eyebrow>
+      <Heading>{c.text.education.heading}</Heading>
       <div style={{ position: "relative", paddingLeft: 28 }}>
         <div style={{ position: "absolute", left: 6, top: 6, bottom: 6, width: 2, background: GRAD, opacity: 0.4 }} />
-        {items.map((it, i) => (
-          <div key={i} style={{ position: "relative", marginBottom: 30 }}>
+        {items.map((it) => (
+          <div key={it.id} style={{ position: "relative", marginBottom: 30 }}>
             <div
               style={{
                 position: "absolute",

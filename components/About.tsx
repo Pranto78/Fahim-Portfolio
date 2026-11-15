@@ -2,42 +2,16 @@
 import { ReactNode, useState } from "react";
 import { motion, Variants, useReducedMotion } from "framer-motion";
 import Image from "next/image";
-import {
-  Github,
-  ExternalLink,
-  MapPin,
-  Briefcase,
-  GraduationCap,
-  UserRound,
-  PlaneTakeoff,
-  CodeXml,
-  BrainCircuit,
-  Gamepad2,
-  Clapperboard,
-  Tv,
-} from "lucide-react";
-import { FaFutbol } from "react-icons/fa6";
-import { SiCrunchyroll } from "react-icons/si";
-import { THEME } from "@/config/theme.config";
-import { PERSON, PERSONAL } from "@/data/person";
+import { Github, ExternalLink, UserRound, Sparkles } from "lucide-react";
+import { THEME, themeColor } from "@/config/theme.config";
+import { resolveIcon } from "@/lib/icons";
+import type { Hobby, PersonalProject } from "@/lib/content/types";
+import { useContent, fillTokens } from "./ContentProvider";
 import { Section, Eyebrow, Heading } from "./ui";
 import SnakeBorder from "./SnakeBorder";
 import ABOUT_PHOTO_SRC from "@/asset/pranto2.png";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
-const picture = ABOUT_PHOTO_SRC;
-// const ABOUT_PHOTO_SRC = "https://i.ibb.co.com/qLmVVk8h/about12.png";
-
-const HOBBY_META: Record<string, { icon: ReactNode; color: string }> = {
-  "Traveling & exploring": { icon: <PlaneTakeoff size={15} />, color: THEME.cyan },
-  "Building side projects": { icon: <CodeXml size={15} />, color: THEME.violet },
-  "Exploring new web/AI tech": { icon: <BrainCircuit size={15} />, color: THEME.green },
-  Football: { icon: <FaFutbol size={15} />, color: "#4ADE80" },
-  Gaming: { icon: <Gamepad2 size={15} />, color: "#A78BFA" },
-  Movies: { icon: <Clapperboard size={15} />, color: "#FB7185" },
-  "TV Series": { icon: <Tv size={15} />, color: "#60A5FA" },
-  Anime: { icon: <SiCrunchyroll size={15} />, color: "#F47521" },
-};
 
 // Columns slide in from opposite sides.
 const colFrom = (dir: -1 | 1): Variants => ({
@@ -64,9 +38,11 @@ function Row({ icon, label }: { icon: ReactNode; label: string }) {
   );
 }
 
-function HobbyChip({ label }: { label: string }) {
+function HobbyChip({ hobby }: { hobby: Hobby }) {
   const reduced = useReducedMotion();
-  const meta = HOBBY_META[label];
+  const label = hobby.label;
+  const Icon = resolveIcon(hobby.icon) ?? Sparkles;
+  const meta = { icon: <Icon size={15} />, color: themeColor(hobby.color) };
 
   return (
     <motion.span
@@ -126,18 +102,22 @@ function HobbyChip({ label }: { label: string }) {
   );
 }
 
-function AboutPhotoFrame() {
+function AboutPhotoFrame({ name, url }: { name: string; url: string }) {
   return (
     <div className="about-photo-frame">
       <div className="about-photo-inner">
-        <Image src={picture} alt={PERSON.name} loading="lazy" />
-        <div className="about-photo-tag">{PERSON.name}</div>
+        {url ? (
+          <Image src={url} alt={name} fill unoptimized loading="lazy" />
+        ) : (
+          <Image src={ABOUT_PHOTO_SRC} alt={name} loading="lazy" />
+        )}
+        <div className="about-photo-tag">{name}</div>
       </div>
     </div>
   );
 }
 
-function PersonalCard({ p }: { p: (typeof PERSONAL)[number] }) {
+function PersonalCard({ p }: { p: PersonalProject }) {
   const [hover, setHover] = useState(false);
   return (
     <motion.div variants={cardFloat}>
@@ -180,11 +160,34 @@ function PersonalCard({ p }: { p: (typeof PERSONAL)[number] }) {
   );
 }
 
+/** Bio text with {name}/{role}/{location} filled and {company} rendered as the company link. */
+function Bio({ text }: { text: string }) {
+  const c = useContent();
+  const parts = fillTokens(text.replace(/\{company\}/g, "\u0000"), c).split("\u0000");
+  return (
+    <>
+      {parts.map((part, i) => (
+        <span key={i}>
+          {part}
+          {i < parts.length - 1 && (
+            <a href={c.profile.companyUrl} target="_blank" rel="noreferrer" className="accent-link">
+              {c.profile.company}
+            </a>
+          )}
+        </span>
+      ))}
+    </>
+  );
+}
+
 export default function About() {
+  const c = useContent();
+  const { profile: PERSON, personal, branding } = c;
+  const t = c.text.about;
   return (
     <Section id="about" variant="fade">
-      <Eyebrow icon={UserRound}>About</Eyebrow>
-      <Heading>Who I am</Heading>
+      <Eyebrow icon={UserRound}>{t.eyebrow}</Eyebrow>
+      <Heading>{t.heading}</Heading>
       <div style={{ display: "flex", flexWrap: "wrap", gap: 40 }}>
         <motion.div
           variants={colFrom(-1)}
@@ -194,26 +197,21 @@ export default function About() {
           style={{ flex: "1 1 340px" }}
         >
           <p style={{ fontSize: 16.5, color: THEME.text, lineHeight: 1.75 }}>
-            My name is {PERSON.name}. I&apos;m a {PERSON.role} on the Technology Team at{" "}
-            <a href={PERSON.companyUrl} target="_blank" rel="noreferrer" className="accent-link">
-              Octopi Digital
-            </a>
-            , building production web and mobile apps. My day-to-day spans React/Next on the web,
-            React Native on mobile, and Node/Express APIs — with a current focus on secure,
-            role-based backend systems.
+            <Bio text={t.bio} />
           </p>
           <div style={{ marginTop: 26, display: "flex", flexDirection: "column", gap: 12 }}>
-            <Row icon={<Briefcase size={18} />} label="Octopi Digital —  Software Engineer" />
-            <Row icon={<MapPin size={18} />} label={PERSON.location} />
-            <Row icon={<GraduationCap size={18} />} label="BSc in CSE, AIUB (expected 2026)" />
+            {t.infoRows.map((row, i) => {
+              const Icon = resolveIcon(row.icon) ?? Sparkles;
+              return <Row key={i} icon={<Icon size={18} />} label={fillTokens(row.label, c)} />;
+            })}
           </div>
 
           <h3 style={{ fontFamily: THEME.fontDisplay, color: THEME.heading, fontSize: 18, marginTop: 36, marginBottom: 14 }}>
-            Hobbies
+            {t.hobbiesTitle}
           </h3>
           <div style={{ display: "flex", flexWrap: "wrap", gap: 10 }}>
             {PERSON.hobbies.map((h) => (
-              <HobbyChip key={h} label={h} />
+              <HobbyChip key={h.label} hobby={h} />
             ))}
           </div>
         </motion.div>
@@ -225,9 +223,9 @@ export default function About() {
           viewport={{ once: false, amount: 0.25 }}
           style={{ flex: "1 1 420px", minWidth: 0 }}
         >
-          <AboutPhotoFrame />
+          <AboutPhotoFrame name={PERSON.name} url={branding.aboutImageUrl} />
           <h3 style={{ fontFamily: THEME.fontDisplay, color: THEME.heading, fontSize: 18, marginBottom: 14 }}>
-            Personal Projects
+            {t.personalProjectsTitle}
           </h3>
           <motion.div
             className="about-project-grid"
@@ -236,8 +234,8 @@ export default function About() {
             whileInView="show"
             viewport={{ once: false, amount: 0.2 }}
           >
-            {PERSONAL.map((p) => (
-              <PersonalCard key={p.name} p={p} />
+            {personal.map((p) => (
+              <PersonalCard key={p.id} p={p} />
             ))}
           </motion.div>
         </motion.div>

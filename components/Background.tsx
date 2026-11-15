@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useRef } from "react";
-import { THEME } from "@/config/theme.config";
+import { SPACE } from "@/config/theme.config"; // fixed space theme — not editable from remoteControl
 
 type Particle = {
   bx: number; // drifting base position
@@ -90,10 +90,10 @@ export default function Background() {
     }
 
     function paintBackdrop() {
-      ctx.fillStyle = THEME.bg;
+      ctx.fillStyle = SPACE.bg;
       ctx.fillRect(0, 0, w, h);
-      blob(w * 0.24 + Math.sin(t) * 40, h * 0.2 + Math.cos(t) * 30, Math.max(w, h) * 0.55, THEME.cyan, 0.03);
-      blob(w * 0.8 + Math.cos(t * 0.8) * 40, h * 0.82 + Math.sin(t) * 30, Math.max(w, h) * 0.55, THEME.violet, 0.035);
+      blob(w * 0.24 + Math.sin(t) * 40, h * 0.2 + Math.cos(t) * 30, Math.max(w, h) * 0.55, SPACE.cyan, 0.03);
+      blob(w * 0.8 + Math.cos(t * 0.8) * 40, h * 0.82 + Math.sin(t) * 30, Math.max(w, h) * 0.55, SPACE.violet, 0.035);
     }
 
     function draw() {

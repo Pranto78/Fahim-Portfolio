@@ -3,38 +3,34 @@ import { useState } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { Layers } from "lucide-react";
 import { THEME } from "@/config/theme.config";
-import { Skill, chunkSkills } from "@/data/skills";
+import type { SkillItem } from "@/lib/content/types";
 import { useTypewriter } from "@/lib/useTypewriter";
 import { Section, Eyebrow, Heading } from "./ui";
 import TiltCard from "./TiltCard";
+import SkillLogo from "./SkillLogo";
+import { useContent } from "./ContentProvider";
+
+type Skill = SkillItem;
 
 const TILE_WIDTH = 150;
 const MARQUEE_GAP = 14;
 const MARQUEE_SPEED = 10; // pixels per second — intentionally calm and easy to scan
 
-function SkillIcon({ skill, size }: { skill: Skill; size: number }) {
-  if (skill.icon) {
-    const Icon = skill.icon;
-    return <Icon size={size} color={skill.color} />;
-  }
-  return (
-    <span
-      style={{
-        fontFamily: THEME.fontMono,
-        fontWeight: 700,
-        fontSize: size * 0.5,
-        color: skill.color,
-      }}
-    >
-      {skill.mono}
-    </span>
-  );
+// Split the skills into `n` roughly-even sequential rows for the marquee.
+function chunkSkills(skills: Skill[], n: number): Skill[][] {
+  const per = Math.ceil(skills.length / n);
+  return Array.from({ length: n }, (_, i) => skills.slice(i * per, i * per + per)).filter((r) => r.length);
+}
+
+function SkillIcon({ skill, size }: { skill: Pick<Skill, "icon" | "iconUrl" | "mono" | "color" | "name">; size: number }) {
+  return <SkillLogo skill={skill} size={size} />;
 }
 
 function StickyModal({ skill }: { skill: Skill | null }) {
   const active = skill ?? {
     name: "Hover a stack",
-    icon: null,
+    icon: "",
+    iconUrl: "",
     mono: "?",
     color: THEME.cyan,
     note: "Hover any tile to see what I use it for — typed out live.",
@@ -226,12 +222,13 @@ function MarqueeRow({
 export default function Skills() {
   const [active, setActive] = useState<Skill | null>(null);
   const reduced = useReducedMotion();
-  const rows = chunkSkills(3);
+  const c = useContent();
+  const rows = chunkSkills(c.skills.filter((s) => s.showInSkills), 3);
 
   return (
     <Section id="skills" variant="zoom">
-      <Eyebrow icon={Layers}>Stack</Eyebrow>
-      <Heading>Skills &amp; Tools</Heading>
+      <Eyebrow icon={Layers}>{c.text.skills.eyebrow}</Eyebrow>
+      <Heading>{c.text.skills.heading}</Heading>
 
       <StickyModal skill={active} />
 

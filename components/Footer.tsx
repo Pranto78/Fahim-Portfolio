@@ -2,12 +2,14 @@
 import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
 import { THEME } from "@/config/theme.config";
-import { PERSON } from "@/data/person";
+import { useContent, fillTokens } from "./ContentProvider";
 import logo from "@/asset/logo-f-sky-silver.png";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
 export default function Footer() {
+  const c = useContent();
+  const { profile: PERSON, branding } = c;
   const reduced = useReducedMotion();
   return (
     <footer style={{ padding: "60px 5vw 40px", borderTop: `1px solid ${THEME.border}`, marginTop: 40 }}>
@@ -39,7 +41,8 @@ export default function Footer() {
             }}
           >
             <Image
-              src={logo}
+              src={branding.logoUrl || logo}
+              unoptimized={!!branding.logoUrl}
               alt="Fahim logo"
               fill
               sizes="48px"
@@ -49,7 +52,7 @@ export default function Footer() {
           </motion.div>
           <div>
             <div style={{ fontFamily: THEME.fontDisplay, fontWeight: 700, fontSize: 20, color: THEME.heading }}>
-              Let&apos;s build something.
+              {c.text.footer.tagline}
             </div>
             <div style={{ fontSize: 14, color: THEME.muted, marginTop: 6 }}>
               {PERSON.email} · {PERSON.location}
@@ -58,7 +61,7 @@ export default function Footer() {
         </div>
       </div>
       <div style={{ maxWidth: 1200, margin: "30px auto 0", fontSize: 12.5, color: THEME.muted, fontFamily: THEME.fontMono }}>
-        © {new Date().getFullYear()} {PERSON.name}. Built with Next.js.
+        {fillTokens(c.text.footer.copyright, c)}
       </div>
     </footer>
   );
