@@ -15,6 +15,12 @@ import picture1 from "@/asset/pranto.png";
 const GREETING_INTRO_PHRASES = ["Hello, I'm Fahim", "Nice to meet you", "Welcome to my web"];
 const DIRECT_INTRO_PHRASES = ["I'm Fahim", "Nice to meet you", "Welcome to my web"];
 
+const HERO_STATS = [
+  { value: "1+", label: "year experience" },
+  { value: "5+", label: "products shipped" },
+  { value: "Web + Mobile", label: "full stack" },
+];
+
 function getLocalGreeting() {
   const hour = new Date().getHours();
 
@@ -182,6 +188,15 @@ export default function Hero() {
               <FileText size={18} /> View CV
             </a>
           </div>
+
+          <dl className="hero-stats">
+            {HERO_STATS.map((s) => (
+              <div key={s.label} className="hero-stat">
+                <dt className="hero-stat-value">{s.value}</dt>
+                <dd className="hero-stat-label">{s.label}</dd>
+              </div>
+            ))}
+          </dl>
         </div>
 
         <div className="hero-social social-rail">
